@@ -47,6 +47,13 @@ This platform combines multiple sophisticated evaluation systems - spectral anal
 - Progression: Browse primitives → Select primitive → View documentation → Run test cases → See results
 - Success criteria: All primitives documented clearly, tests are interactive, results validate correctness
 
+**Real-Time Session Monitor**
+- Functionality: Monitors live collaborative sessions with real-time participant metrics, activity tracking, and engagement analysis
+- Purpose: Provides visibility into team dynamics and collaboration effectiveness through live metrics
+- Trigger: User starts a monitoring session from the Session tab
+- Progression: Start session → Participants join → Real-time metric updates → Activity stream visualization → End session with summary
+- Success criteria: Metrics update in real-time (< 2s latency), participant status accurately reflects activity, activity stream shows meaningful events, coherence score provides actionable insights
+
 ## Edge Case Handling
 
 - **No Data Available**: Display elegant empty states with sample data generation options
@@ -55,6 +62,9 @@ This platform combines multiple sophisticated evaluation systems - spectral anal
 - **Hardware Not Connected**: Graceful fallback to simulation mode with visual indicator
 - **Extremely Poor Coherence**: Display encouraging messaging with specific improvement suggestions
 - **Browser Compatibility**: Feature detection with graceful degradation for unsupported features
+- **Session Participant Limit**: Cap at 10 participants with queue notification for additional joiners
+- **Network Interruption**: Maintain local state and display connection status with auto-reconnect
+- **Rapid Activity Bursts**: Throttle activity stream updates to prevent UI overwhelming
 
 ## Design Direction
 
@@ -124,8 +134,11 @@ Animations should emphasize data flow and state transitions with precision. Use 
   - GitBranch: Repository classification
   - Plugs: Hardware bridges
   - Cube: Primitives library
+  - UsersThree: Real-time session monitoring
   - Lightning: Active/real-time indicators
   - Check/X: Pass/fail states
+  - Clock: Time-based metrics
+  - ChatCircle/GitCommit: Activity types
   
 - **Spacing**:
   - Page padding: p-8 (32px)

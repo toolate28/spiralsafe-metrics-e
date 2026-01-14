@@ -8,12 +8,14 @@ import { SpectralAnalyzer } from '@/components/SpectralAnalyzer'
 import { AuthTester } from '@/components/AuthTester'
 import { HardwareBridge } from '@/components/HardwareBridge'
 import { PrimitivesLibrary } from '@/components/PrimitivesLibrary'
+import { SessionMonitor } from '@/components/SessionMonitor'
 import { 
   Waveform, 
   ShieldCheck, 
   Plugs, 
   Cube, 
-  SortAscending 
+  SortAscending,
+  UsersThree
 } from '@phosphor-icons/react'
 
 function App() {
@@ -65,7 +67,7 @@ function App() {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-2 bg-transparent">
+            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 gap-2 bg-transparent">
               <TabsTrigger 
                 value="sorting" 
                 className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
@@ -105,6 +107,14 @@ function App() {
                 <Cube size={18} />
                 <span className="hidden sm:inline">Primitives</span>
                 <span className="sm:hidden">Prim</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="session"
+                className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <UsersThree size={18} />
+                <span className="hidden sm:inline">Session</span>
+                <span className="sm:hidden">Live</span>
               </TabsTrigger>
             </TabsList>
 
@@ -225,6 +235,30 @@ function App() {
                   </div>
                 </Card>
                 <PrimitivesLibrary />
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="session" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Card className="p-6 mb-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-accent/10">
+                      <UsersThree size={32} className="text-accent" weight="duotone" />
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-2xl font-bold mb-2">Real-Time Session Monitor</h2>
+                      <p className="text-muted-foreground">
+                        Track live participant metrics, activity streams, and collaborative patterns in real-time. 
+                        Monitor engagement levels, contribution counts, and session coherence scores.
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+                <SessionMonitor />
               </motion.div>
             </TabsContent>
           </Tabs>
