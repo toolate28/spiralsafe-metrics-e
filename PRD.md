@@ -47,12 +47,12 @@ This platform combines multiple sophisticated evaluation systems - spectral anal
 - Progression: Browse primitives → Select primitive → View documentation → Run test cases → See results
 - Success criteria: All primitives documented clearly, tests are interactive, results validate correctness
 
-**Real-Time Session Monitor**
-- Functionality: Monitors live collaborative sessions with real-time participant metrics, activity tracking, and engagement analysis
-- Purpose: Provides visibility into team dynamics and collaboration effectiveness through live metrics
+**Real-Time Session Monitor with WebSocket Collaboration**
+- Functionality: Monitors live collaborative sessions with true multi-user synchronization via WebSocket (BroadcastChannel), tracking participant metrics, activity, and engagement in real-time
+- Purpose: Provides visibility into team dynamics and collaboration effectiveness through live metrics with instant cross-tab/window synchronization
 - Trigger: User starts a monitoring session from the Session tab
-- Progression: Start session → Participants join → Real-time metric updates → Activity stream visualization → End session with summary
-- Success criteria: Metrics update in real-time (< 2s latency), participant status accurately reflects activity, activity stream shows meaningful events, coherence score provides actionable insights
+- Progression: Start session → Auto-broadcast presence → Other participants join from different tabs/windows → Real-time metric sync → Activity stream visualization → Simulated actions broadcast to all clients → End session with summary
+- Success criteria: Metrics sync instantly (< 100ms), participant join/leave events broadcast to all clients, activity updates appear in real-time across all sessions, WebSocket connection status clearly indicated, supports multiple simultaneous sessions across browser tabs
 
 ## Edge Case Handling
 
@@ -62,9 +62,11 @@ This platform combines multiple sophisticated evaluation systems - spectral anal
 - **Hardware Not Connected**: Graceful fallback to simulation mode with visual indicator
 - **Extremely Poor Coherence**: Display encouraging messaging with specific improvement suggestions
 - **Browser Compatibility**: Feature detection with graceful degradation for unsupported features
-- **Session Participant Limit**: Cap at 10 participants with queue notification for additional joiners
-- **Network Interruption**: Maintain local state and display connection status with auto-reconnect
-- **Rapid Activity Bursts**: Throttle activity stream updates to prevent UI overwhelming
+- **Network Interruption**: Maintain local state and display connection status with auto-reconnect via heartbeat mechanism
+- **Rapid Activity Bursts**: Throttle activity stream updates to prevent UI overwhelming (max 20 activities shown)
+- **Stale Client Detection**: Remove clients that haven't sent heartbeat in 10s with graceful leave notification
+- **Multiple Browser Tabs**: Full support for same user in multiple tabs with unique client IDs
+- **Session Isolation**: Different session IDs ensure no cross-contamination between independent collaborative sessions
 
 ## Design Direction
 
