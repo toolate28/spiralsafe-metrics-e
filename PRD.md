@@ -61,6 +61,27 @@ This platform combines multiple sophisticated evaluation systems - spectral anal
 - Progression: Configure parameters (node count, connection density, rotation speed, physics) → Start visualization → Watch network form and evolve → Nodes pulse with activity → Connections show strength → Global coherence metric updates → Pause/reset as needed
 - Success criteria: Smooth 60fps 3D rendering, intuitive controls, visually striking aesthetic with glowing nodes and dynamic connections, real-time coherence scoring, responsive physics simulation, parameter changes update network instantly
 
+**Data Export & Report Generation**
+- Functionality: Multi-format export system that generates comprehensive reports from all collected metrics, analysis results, and annotations
+- Purpose: Enable external analysis, archival, and sharing of collaborative metrics in various standardized formats
+- Trigger: User navigates to Export tab and selects data categories
+- Progression: Select data categories → Choose export format (CSV, JSON, Markdown, HTML) → Preview selection → Click export → File downloads with formatted data → Confirmation displayed with file size
+- Success criteria: All formats generate valid, well-formatted output; exports complete in < 2 seconds; file includes all selected data; HTML reports are visually appealing; CSV is compatible with Excel/Google Sheets
+
+**AI-Powered Workflow Insights**
+- Functionality: LLM-driven analysis engine that examines all stored metrics and generates personalized, actionable recommendations for workflow optimization
+- Purpose: Surface hidden patterns, identify bottlenecks, and provide data-driven suggestions to improve collaboration effectiveness
+- Trigger: User clicks "Generate Insights" button on Insights tab
+- Progression: Click generate → AI collects all available metrics → LLM analyzes patterns → Generates 5 categorized insights → Displays overall score → Shows priority areas → User expands insights for detailed recommendations → Can re-analyze with updated data
+- Success criteria: Analysis completes in < 10 seconds; generates exactly 5 diverse insights; recommendations are specific and actionable; severity levels are accurate; overall score reflects actual performance; insights are non-repetitive
+
+**Collaborative Annotation System**
+- Functionality: Real-time annotation and commenting system that allows users to mark, tag, and discuss specific metrics, events, or analysis results with collaborative sync
+- Purpose: Enable team context sharing, important moment marking, and asynchronous collaboration through persistent notes
+- Trigger: User clicks "New Annotation" and creates note attached to any system entity
+- Progression: Click new annotation → Select target type and category → Enter content and tags → Save → Annotation broadcasts to all clients → Appears in activity feed → Team members can resolve or comment → Filterable by category, status, search terms
+- Success criteria: Annotations sync instantly across clients; support 5 categories and 5 target types; full-text search works; resolved/unresolved filtering accurate; tags are editable; delete removes from all clients; timestamps are accurate
+
 ## Edge Case Handling
 
 - **No Data Available**: Display elegant empty states with sample data generation options
@@ -77,6 +98,15 @@ This platform combines multiple sophisticated evaluation systems - spectral anal
 - **WebGL Not Available**: Display fallback message for 3D visualization with graceful degradation
 - **Low-Performance Devices**: Automatically reduce particle count and physics simulation quality
 - **Large Network Graphs**: Cap maximum nodes at 30 to maintain performance while showing complex relationships
+- **LLM API Failure**: Display friendly error message with retry option; never expose technical error details
+- **Empty Data for Insights**: Generate insights based on sample/mock data with clear indication
+- **Malformed LLM Response**: Catch JSON parse errors and retry with modified prompt
+- **Export During Data Collection**: Show progress indicator; allow cancellation
+- **Large Export Files**: Warn user if export exceeds 10MB; compress if possible
+- **Annotation Sync Conflict**: Last-write-wins for edits; show conflict indicator if detected
+- **Annotation Flood Protection**: Rate limit to 10 annotations per minute per user
+- **Tag Duplication**: Prevent duplicate tags in same annotation
+- **Deleted Annotation Reference**: Handle gracefully if annotation referenced elsewhere is deleted
 
 ## Design Direction
 
@@ -149,11 +179,17 @@ Animations should emphasize data flow and state transitions with precision. Use 
   - Cube: Primitives library
   - UsersThree: Real-time session monitoring
   - Planet: 3D network visualization
+  - Download: Data export
+  - Sparkle: AI insights
+  - PushPin: Annotations
   - Lightning: Active/real-time indicators
   - Check/X: Pass/fail states
   - Clock: Time-based metrics
   - ChatCircle/GitCommit: Activity types
   - Graph: Network topology
+  - Target: Goals and improvements
+  - Lightbulb: Suggestions
+  - Tag: Labels and categories
   
 - **Spacing**:
   - Page padding: p-8 (32px)

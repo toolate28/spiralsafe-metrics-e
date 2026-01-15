@@ -1,0 +1,536 @@
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
+import { Progress } from '@/components/ui/progress'
+import { 
+  Download, 
+  FileCsv, 
+  FileText, 
+  FileJs,
+  FileCode,
+  CheckCircle,
+  Warning,
+  Lightning,
+  Package,
+  Clock
+} from '@phosphor-icons/react'
+import { useKV } from '@github/spark/hooks'
+import { toast } from 'sonner'
+
+interface ExportData {
+  sessionMetrics?: any
+  sortingHatResults?: any
+  spectralAnalysis?: any
+  authTests?: any
+  hardwareDiagnostics?: any
+  primitiveTests?: any
+  annotations?: any
+}
+
+interface ExportFormat {
+  id: string
+  name: string
+  extension: string
+  icon: typeof FileCsv
+  description: string
+  mimeType: string
+}
+
+const exportFormats: ExportFormat[] = [
+  {
+    id: 'csv',
+    name: 'CSV',
+    extension: '.csv',
+    icon: FileCsv,
+    description: 'Comma-separated values for spreadsheets',
+    mimeType: 'text/csv'
+  },
+  {
+    id: 'json',
+    name: 'JSON',
+    extension: '.json',
+    icon: FileJs,
+    description: 'Structured data for programmatic use',
+    mimeType: 'application/json'
+  },
+  {
+    id: 'markdown',
+    name: 'Markdown',
+    extension: '.md',
+    icon: FileText,
+    description: 'Human-readable report format',
+    mimeType: 'text/markdown'
+  },
+  {
+    id: 'html',
+    name: 'HTML',
+    extension: '.html',
+    icon: FileCode,
+    description: 'Interactive web-based report',
+    mimeType: 'text/html'
+  }
+]
+
+const dataCategories = [
+  { id: 'sessionMetrics', label: 'Session Metrics', key: 'session-metrics' },
+  { id: 'sortingHatResults', label: 'Sorting Hat Results', key: 'sorting-hat-results' },
+  { id: 'spectralAnalysis', label: 'Spectral Analysis', key: 'spectral-analysis' },
+  { id: 'authTests', label: 'Authentication Tests', key: 'auth-tests' },
+  { id: 'hardwareDiagnostics', label: 'Hardware Diagnostics', key: 'hardware-diagnostics' },
+  { id: 'primitiveTests', label: 'Primitive Tests', key: 'primitive-tests' },
+  { id: 'annotations', label: 'Annotations', key: 'annotations' }
+]
+
+export function DataExporter() {
+  const [selectedFormat, setSelectedFormat] = useState<string>('json')
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set(['sessionMetrics']))
+  const [isExporting, setIsExporting] = useState(false)
+  const [exportProgress, setExportProgress] = useState(0)
+  const [lastExport, setLastExport] = useKV<{ timestamp: number; format: string; size: number } | null>('last-export', null)
+
+  const toggleCategory = (categoryId: string) => {
+    setSelectedCategories(prev => {
+      const next = new Set(prev)
+      if (next.has(categoryId)) {
+        next.delete(categoryId)
+      } else {
+        next.add(categoryId)
+      }
+      return next
+    })
+  }
+
+  const collectData = async (): Promise<ExportData> => {
+    const data: ExportData = {}
+    
+    for (const category of dataCategories) {
+      if (selectedCategories.has(category.id)) {
+        const storedData = await window.spark.kv.get(category.key)
+        if (storedData) {
+          data[category.id as keyof ExportData] = storedData
+        } else {
+          data[category.id as keyof ExportData] = { 
+            message: `No ${category.label.toLowerCase()} data available`,
+            timestamp: Date.now()
+          }
+        }
+      }
+    }
+    
+    return data
+  }
+
+  const generateCSV = (data: ExportData): string => {
+    let csv = 'Category,Key,Value,Timestamp\n'
+    
+    for (const [category, content] of Object.entries(data)) {
+      if (typeof content === 'object' && content !== null) {
+        for (const [key, value] of Object.entries(content)) {
+          const sanitizedValue = typeof value === 'object' 
+            ? JSON.stringify(value).replace(/"/g, '""')
+            : String(value).replace(/"/g, '""')
+          csv += `"${category}","${key}","${sanitizedValue}","${new Date().toISOString()}"\n`
+        }
+      }
+    }
+    
+    return csv
+  }
+
+  const generateMarkdown = (data: ExportData): string => {
+    let md = '# SpiralSafe Metrics Export Report\n\n'
+    md += `**Generated:** ${new Date().toLocaleString()}\n\n`
+    md += '---\n\n'
+    
+    for (const [category, content] of Object.entries(data)) {
+      const categoryLabel = dataCategories.find(c => c.id === category)?.label || category
+      md += `## ${categoryLabel}\n\n`
+      
+      if (typeof content === 'object' && content !== null) {
+        md += '```json\n'
+        md += JSON.stringify(content, null, 2)
+        md += '\n```\n\n'
+      }
+    }
+    
+    md += '---\n\n'
+    md += '*Generated by SpiralSafe Collaborative Metrics Platform*\n'
+    
+    return md
+  }
+
+  const generateHTML = (data: ExportData): string => {
+    let html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpiralSafe Metrics Report</title>
+  <style>
+    body {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      background: oklch(0.12 0.02 270);
+      color: oklch(0.95 0.01 270);
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+    h2 { 
+      font-size: 1.75rem; 
+      font-weight: 600; 
+      margin-top: 2rem; 
+      margin-bottom: 1rem;
+      color: oklch(0.75 0.15 195);
+    }
+    .card {
+      background: oklch(0.20 0.08 250);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .badge {
+      background: oklch(0.35 0.15 290);
+      color: oklch(0.98 0 0);
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    pre {
+      background: oklch(0.15 0.02 270);
+      padding: 1rem;
+      border-radius: 0.25rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+    }
+    .timestamp {
+      color: oklch(0.60 0.05 270);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SpiralSafe Metrics Export Report</h1>
+    <p class="timestamp">Generated: ${new Date().toLocaleString()}</p>
+    <span class="badge">v1.0.0</span>
+    <hr style="border: 1px solid oklch(0.30 0.08 260); margin: 2rem 0;">
+`
+    
+    for (const [category, content] of Object.entries(data)) {
+      const categoryLabel = dataCategories.find(c => c.id === category)?.label || category
+      html += `    <div class="card">
+      <h2>${categoryLabel}</h2>
+      <pre>${JSON.stringify(content, null, 2)}</pre>
+    </div>
+`
+    }
+    
+    html += `    <hr style="border: 1px solid oklch(0.30 0.08 260); margin: 2rem 0;">
+    <p class="timestamp">Generated by SpiralSafe Collaborative Metrics Platform</p>
+  </div>
+</body>
+</html>`
+    
+    return html
+  }
+
+  const handleExport = async () => {
+    if (selectedCategories.size === 0) {
+      toast.error('No data selected', { description: 'Please select at least one data category to export' })
+      return
+    }
+
+    setIsExporting(true)
+    setExportProgress(0)
+
+    try {
+      setExportProgress(20)
+      const data = await collectData()
+      
+      setExportProgress(50)
+      const format = exportFormats.find(f => f.id === selectedFormat)
+      if (!format) throw new Error('Invalid format')
+
+      let content: string
+      switch (selectedFormat) {
+        case 'csv':
+          content = generateCSV(data)
+          break
+        case 'markdown':
+          content = generateMarkdown(data)
+          break
+        case 'html':
+          content = generateHTML(data)
+          break
+        case 'json':
+        default:
+          content = JSON.stringify(data, null, 2)
+      }
+
+      setExportProgress(80)
+      const blob = new Blob([content], { type: format.mimeType })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `spiralsafe-export-${Date.now()}${format.extension}`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+
+      setExportProgress(100)
+      
+      setLastExport({
+        timestamp: Date.now(),
+        format: format.name,
+        size: blob.size
+      })
+
+      toast.success('Export complete', { 
+        description: `Downloaded ${format.name} file (${(blob.size / 1024).toFixed(1)} KB)` 
+      })
+
+      setTimeout(() => {
+        setIsExporting(false)
+        setExportProgress(0)
+      }, 1000)
+
+    } catch (error) {
+      console.error('Export error:', error)
+      toast.error('Export failed', { description: 'An error occurred while exporting data' })
+      setIsExporting(false)
+      setExportProgress(0)
+    }
+  }
+
+  const formatBytes = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+  }
+
+  const formatTimeAgo = (timestamp: number) => {
+    const seconds = Math.floor((Date.now() - timestamp) / 1000)
+    if (seconds < 60) return 'just now'
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`
+    return `${Math.floor(seconds / 86400)}d ago`
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start gap-4">
+        <div className="p-3 rounded-lg bg-accent/10">
+          <Download size={32} className="text-accent" weight="duotone" />
+        </div>
+        <div className="flex-1">
+          <h3 className="text-xl font-semibold mb-1">Data Export & Reporting</h3>
+          <p className="text-sm text-muted-foreground">
+            Generate comprehensive reports from your collaborative metrics in multiple formats. 
+            Export session data, analysis results, and annotations for external use.
+          </p>
+        </div>
+      </div>
+
+      {lastExport && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <Card className="p-4 bg-accent/5 border-accent/20">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <CheckCircle size={24} className="text-accent" weight="fill" />
+                <div>
+                  <div className="font-medium text-sm">Last export successful</div>
+                  <div className="text-xs text-muted-foreground">
+                    {lastExport.format} • {formatBytes(lastExport.size)} • {formatTimeAgo(lastExport.timestamp)}
+                  </div>
+                </div>
+              </div>
+              <Badge variant="secondary" className="gap-1.5">
+                <CheckCircle size={14} weight="fill" />
+                Complete
+              </Badge>
+            </div>
+          </Card>
+        </motion.div>
+      )}
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Package size={20} className="text-primary" />
+            <h4 className="font-semibold">Select Data Categories</h4>
+          </div>
+          
+          <div className="space-y-3">
+            {dataCategories.map((category) => (
+              <motion.div
+                key={category.id}
+                whileHover={{ x: 4 }}
+                className="flex items-center gap-3 p-3 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors"
+              >
+                <Checkbox 
+                  id={category.id}
+                  checked={selectedCategories.has(category.id)}
+                  onCheckedChange={() => toggleCategory(category.id)}
+                />
+                <Label 
+                  htmlFor={category.id}
+                  className="flex-1 cursor-pointer font-medium text-sm"
+                >
+                  {category.label}
+                </Label>
+                {selectedCategories.has(category.id) && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                  >
+                    <CheckCircle size={16} className="text-accent" weight="fill" />
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          <Separator className="my-4" />
+
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-muted-foreground">Selected categories</span>
+            <Badge variant="outline">{selectedCategories.size} / {dataCategories.length}</Badge>
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <FileCode size={20} className="text-secondary" />
+            <h4 className="font-semibold">Export Format</h4>
+          </div>
+
+          <div className="space-y-2 mb-6">
+            {exportFormats.map((format) => {
+              const Icon = format.icon
+              const isSelected = selectedFormat === format.id
+              
+              return (
+                <motion.button
+                  key={format.id}
+                  onClick={() => setSelectedFormat(format.id)}
+                  className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
+                    isSelected
+                      ? 'border-primary bg-primary/10'
+                      : 'border-border hover:border-primary/50 bg-card'
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="flex items-start gap-3">
+                    <Icon 
+                      size={24} 
+                      className={isSelected ? 'text-primary' : 'text-muted-foreground'} 
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold">{format.name}</span>
+                        <span className="text-xs text-muted-foreground font-mono">
+                          {format.extension}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {format.description}
+                      </p>
+                    </div>
+                    {isSelected && (
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                      >
+                        <CheckCircle size={20} className="text-primary" weight="fill" />
+                      </motion.div>
+                    )}
+                  </div>
+                </motion.button>
+              )
+            })}
+          </div>
+
+          <AnimatePresence>
+            {isExporting && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-4"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Exporting data...</span>
+                    <span className="font-mono">{exportProgress}%</span>
+                  </div>
+                  <Progress value={exportProgress} className="h-2" />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <Button 
+            onClick={handleExport}
+            disabled={isExporting || selectedCategories.size === 0}
+            className="w-full gap-2"
+            size="lg"
+          >
+            {isExporting ? (
+              <>
+                <Lightning size={20} className="animate-pulse" weight="fill" />
+                Exporting...
+              </>
+            ) : (
+              <>
+                <Download size={20} weight="fill" />
+                Export Data
+              </>
+            )}
+          </Button>
+
+          {selectedCategories.size === 0 && (
+            <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
+              <Warning size={14} />
+              <span>Select at least one data category</span>
+            </div>
+          )}
+        </Card>
+      </div>
+
+      <Card className="p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Clock size={20} className="text-primary" />
+          <h4 className="font-semibold">Export Information</h4>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div className="p-4 rounded-lg bg-muted/20">
+            <div className="text-muted-foreground mb-1">Available Formats</div>
+            <div className="text-2xl font-bold font-mono">{exportFormats.length}</div>
+          </div>
+          <div className="p-4 rounded-lg bg-muted/20">
+            <div className="text-muted-foreground mb-1">Data Categories</div>
+            <div className="text-2xl font-bold font-mono">{dataCategories.length}</div>
+          </div>
+          <div className="p-4 rounded-lg bg-muted/20">
+            <div className="text-muted-foreground mb-1">Selected Items</div>
+            <div className="text-2xl font-bold font-mono">{selectedCategories.size}</div>
+          </div>
+        </div>
+      </Card>
+    </div>
+  )
+}

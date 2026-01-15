@@ -10,6 +10,9 @@ import { HardwareBridge } from '@/components/HardwareBridge'
 import { PrimitivesLibrary } from '@/components/PrimitivesLibrary'
 import { SessionMonitor } from '@/components/SessionMonitor'
 import { CoherenceConstellation } from '@/components/CoherenceConstellation'
+import { DataExporter } from '@/components/DataExporter'
+import { AIInsights } from '@/components/AIInsights'
+import { AnnotationSystem } from '@/components/AnnotationSystem'
 import { 
   Waveform, 
   ShieldCheck, 
@@ -17,7 +20,10 @@ import {
   Cube, 
   SortAscending,
   UsersThree,
-  Planet
+  Planet,
+  Download,
+  Sparkle,
+  PushPin
 } from '@phosphor-icons/react'
 
 function App() {
@@ -69,7 +75,7 @@ function App() {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 gap-2 bg-transparent">
+            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-10 gap-2 bg-transparent">
               <TabsTrigger 
                 value="sorting" 
                 className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
@@ -125,6 +131,30 @@ function App() {
                 <Planet size={18} />
                 <span className="hidden sm:inline">Constellation</span>
                 <span className="sm:hidden">3D</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="export"
+                className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Download size={18} />
+                <span className="hidden sm:inline">Export</span>
+                <span className="sm:hidden">Export</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="insights"
+                className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Sparkle size={18} />
+                <span className="hidden sm:inline">AI Insights</span>
+                <span className="sm:hidden">AI</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="annotations"
+                className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <PushPin size={18} />
+                <span className="hidden sm:inline">Annotations</span>
+                <span className="sm:hidden">Notes</span>
               </TabsTrigger>
             </TabsList>
 
@@ -294,6 +324,36 @@ function App() {
                   </div>
                 </Card>
                 <CoherenceConstellation />
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="export" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <DataExporter />
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="insights" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <AIInsights />
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="annotations" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <AnnotationSystem />
               </motion.div>
             </TabsContent>
           </Tabs>
