@@ -1,206 +1,203 @@
 # Planning Guide
 
-A collaborative metrics evaluation platform that analyzes user-AI-repository interactions through SpiralSafe's advanced primitives and protocols, providing spectral coherence analysis, multi-factor authentication testing, and hardware bridge diagnostics in an intuitive, visually striking interface.
+A healthcare convergence platform designed to coordinate transitions across major AI medical initiatives (Anthropic, OpenAI, Google Health), providing infrastructure readiness assessment, cross-platform protocol synchronization, medical data migration planning, and real-time transition monitoring to ensure seamless healthcare AI system transitions.
 
 **Experience Qualities**:
-1. **Enigmatic** - The interface should feel like discovering an arcane system, with layers of depth that reveal themselves progressively as users interact with different evaluation tools.
-2. **Precise** - Every metric, visualization, and test result must communicate exact values and states with scientific clarity, building trust in the evaluation process.
-3. **Kinetic** - Interactions should feel responsive and alive, with real-time feedback that makes complex protocol testing feel immediate and tangible.
+1. **Trustworthy** - The interface must radiate reliability and medical-grade precision, with every metric and assessment clearly traceable to ensure confidence in life-critical transitions.
+2. **Orchestrated** - Feels like conducting a complex symphony where multiple AI platforms, data systems, and medical workflows harmonize through coordinated transition phases.
+3. **Resilient** - Communicates system robustness through redundancy indicators, fallback visualizations, and clear capacity metrics that prove readiness for healthcare's zero-downtime requirements.
 
 **Complexity Level**: Complex Application (advanced functionality, likely with multiple views)
-This platform combines multiple sophisticated evaluation systems - spectral analysis visualization, authentication protocol testing, hardware bridge diagnostics, and AI sorting - each requiring distinct interfaces and real-time data processing capabilities.
+This platform orchestrates multi-vendor AI transitions in healthcare contexts, requiring real-time capacity monitoring, cross-platform API compatibility testing, medical data migration simulation, regulatory compliance tracking, and transition timeline coordination across enterprise healthcare systems.
 
 ## Essential Features
 
-**Sorting Hat Classification**
-- Functionality: Analyzes user/AI/repository collaboration patterns and assigns classification based on interaction signatures
-- Purpose: Provides immediate insight into collaboration style and optimal workflow patterns
-- Trigger: User initiates evaluation from main dashboard
-- Progression: Welcome prompt → Answer interactive questions → Real-time analysis visualization → Classification reveal with spectral signature → Detailed breakdown
-- Success criteria: Classification feels personalized, visualization is captivating, results are actionable
+**Infrastructure Readiness Assessment**
+- Functionality: Comprehensive evaluation of current healthcare systems' capacity to handle AI platform transitions
+- Purpose: Identify bottlenecks, resource gaps, and technical debt before beginning migration
+- Trigger: User initiates assessment from dashboard
+- Progression: Select assessment scope → System discovery and profiling → Load testing simulation → Resource capacity analysis → Readiness score with detailed breakdown → Remediation recommendations
+- Success criteria: Assessment completes in < 30s, identifies all critical blockers, provides actionable capacity metrics (compute, storage, bandwidth, API limits)
 
-**Spectral Coherence Analyzer**
-- Functionality: Visualizes frequency-domain analysis of collaborative signals with real-time waveform display
-- Purpose: Reveals hidden patterns in collaboration data that indicate synchronization quality
-- Trigger: User selects spectral analysis from toolkit menu
-- Progression: Select data source → Configure analysis parameters → Live waveform visualization → Coherence score calculation → Export/save results
-- Success criteria: Waveforms are smooth and responsive, coherence metrics are clearly explained, visual design is scientifically aesthetic
+**Cross-Platform API Compatibility Matrix**
+- Functionality: Tests API compatibility across Anthropic Claude, OpenAI GPT, and Google Med-PaLM for medical use cases
+- Purpose: Ensures seamless transitions between AI platforms without breaking medical workflows
+- Trigger: User selects platforms to compare and medical use case
+- Progression: Select source/target platforms → Define medical workflow (diagnosis, imaging, documentation) → Run compatibility tests → View API parity matrix → Identify gaps → Generate adapter code
+- Success criteria: Tests cover authentication, rate limits, context windows, medical terminology handling, HIPAA compliance features; generates working adapter code
 
-**3FA/ATOM-AUTH Protocol Tester**
-- Functionality: Tests three-factor authentication flows with atomic authentication primitives
-- Purpose: Validates authentication protocol implementations and identifies weaknesses
-- Trigger: User uploads or configures authentication protocol
-- Progression: Protocol configuration → Factor selection → Authentication simulation → Result matrix → Security score and recommendations
-- Success criteria: All authentication factors are tested accurately, results show clear pass/fail states, recommendations are specific
+**Medical Data Migration Planner**
+- Functionality: Simulates and plans migration of healthcare data between AI systems with integrity validation
+- Purpose: Ensure zero data loss and maintained clinical context during transitions
+- Trigger: User defines migration scope and selects source/destination
+- Progression: Define data scope → Map field transformations → Run migration simulation → Validate medical context preservation → Generate migration runbook → Schedule phased rollout
+- Success criteria: Catches all schema mismatches, validates medical coding systems (ICD-10, SNOMED), estimates migration time, provides rollback procedures
 
-**Isomorphic Hardware Bridge Diagnostic**
-- Functionality: Tests hardware bridge implementations (e.g., Tartarus Pro remapping for Minecraft/AI interaction)
-- Purpose: Validates hardware-software bridges work correctly across different contexts
-- Trigger: User selects hardware device and target application
-- Progression: Device selection → Bridge configuration → Input/output testing → Latency measurement → Compatibility report
-- Success criteria: Real-time input/output feedback, latency displayed in milliseconds, clear compatibility status
+**Transition Timeline Orchestrator**
+- Functionality: Visual timeline and dependency graph for coordinating multi-phase healthcare AI transitions
+- Purpose: Coordinate stakeholders, validate readiness gates, track progress across transition phases
+- Trigger: User creates new transition project
+- Progression: Define transition phases → Assign teams and deadlines → Set validation gates → Monitor progress → Receive alerts for blockers → Adjust timeline → Mark phases complete
+- Success criteria: Visual Gantt-style timeline, critical path highlighting, real-time progress tracking, automated stakeholder notifications
 
-**Primitive Protocol Library**
-- Functionality: Browse and test individual SpiralSafe primitives with interactive examples
-- Purpose: Educational tool and testing ground for protocol components
-- Trigger: User clicks on primitives library
-- Progression: Browse primitives → Select primitive → View documentation → Run test cases → See results
-- Success criteria: All primitives documented clearly, tests are interactive, results validate correctness
+**Real-Time Capacity Monitor**
+- Functionality: Live dashboard showing system capacity metrics across all AI platforms and healthcare infrastructure
+- Purpose: Ensure systems can handle load during transition, detect anomalies early
+- Trigger: Auto-starts when user navigates to Monitor tab
+- Progression: Connect to monitoring endpoints → Display real-time metrics (API quotas, response times, error rates, token usage) → Set alert thresholds → Receive notifications → View historical trends
+- Success criteria: Updates every 5 seconds, supports Anthropic/OpenAI/Google APIs, shows capacity as percentage of limits, alerts before hitting caps
 
-**Real-Time Session Monitor with WebSocket Collaboration**
-- Functionality: Monitors live collaborative sessions with true multi-user synchronization via WebSocket (BroadcastChannel), tracking participant metrics, activity, and engagement in real-time
-- Purpose: Provides visibility into team dynamics and collaboration effectiveness through live metrics with instant cross-tab/window synchronization
-- Trigger: User starts a monitoring session from the Session tab
-- Progression: Start session → Auto-broadcast presence → Other participants join from different tabs/windows → Real-time metric sync → Activity stream visualization → Simulated actions broadcast to all clients → End session with summary
-- Success criteria: Metrics sync instantly (< 100ms), participant join/leave events broadcast to all clients, activity updates appear in real-time across all sessions, WebSocket connection status clearly indicated, supports multiple simultaneous sessions across browser tabs
+**Regulatory Compliance Tracker**
+- Functionality: Tracks HIPAA, GDPR, FDA AI/ML guidance compliance across transition phases
+- Purpose: Ensure medical AI transitions maintain regulatory compliance throughout process
+- Trigger: User enables compliance tracking for transition project
+- Progression: Select applicable regulations → Define compliance checkpoints → Map requirements to transition phases → Monitor compliance status → Generate audit reports → Track remediation
+- Success criteria: Covers HIPAA, GDPR, FDA guidance; provides evidence collection; generates audit-ready documentation
 
-**Coherence Constellation 3D Visualization**
-- Functionality: Real-time 3D network visualization using Three.js that maps collaborative relationships between users, AI systems, and repositories with physics-based animation
-- Purpose: Reveals the hidden architecture of collaborative workflows through spatial relationships, connection patterns, and network topology
-- Trigger: User navigates to Constellation tab and starts visualization
-- Progression: Configure parameters (node count, connection density, rotation speed, physics) → Start visualization → Watch network form and evolve → Nodes pulse with activity → Connections show strength → Global coherence metric updates → Pause/reset as needed
-- Success criteria: Smooth 60fps 3D rendering, intuitive controls, visually striking aesthetic with glowing nodes and dynamic connections, real-time coherence scoring, responsive physics simulation, parameter changes update network instantly
+**AI News Convergence Feed**
+- Functionality: Aggregated feed of medical AI announcements from Anthropic, OpenAI, Google Health with impact analysis
+- Purpose: Stay current with platform updates that may affect transition strategy
+- Trigger: Auto-refreshes on dashboard, user can manually refresh
+- Progression: Fetch latest news → Classify by impact level → Highlight breaking changes → Show affected features → Provide adaptation recommendations → Archive for reference
+- Success criteria: Updates hourly, categorizes news by platform and impact, highlights API changes, links to official documentation
 
-**Data Export & Report Generation**
-- Functionality: Multi-format export system that generates comprehensive reports from all collected metrics, analysis results, and annotations
-- Purpose: Enable external analysis, archival, and sharing of collaborative metrics in various standardized formats
-- Trigger: User navigates to Export tab and selects data categories
-- Progression: Select data categories → Choose export format (CSV, JSON, Markdown, HTML) → Preview selection → Click export → File downloads with formatted data → Confirmation displayed with file size
-- Success criteria: All formats generate valid, well-formatted output; exports complete in < 2 seconds; file includes all selected data; HTML reports are visually appealing; CSV is compatible with Excel/Google Sheets
+**Transition Playbook Library**
+- Functionality: Curated collection of battle-tested transition playbooks for common healthcare AI scenarios
+- Purpose: Accelerate transitions using proven patterns and avoid common pitfalls
+- Trigger: User browses playbook library or searches by use case
+- Progression: Search/browse playbooks → Preview playbook steps → Clone for customization → Adapt to specific context → Execute with monitoring → Contribute learnings back
+- Success criteria: 10+ playbooks covering common scenarios (EHR integration, diagnostic AI swap, documentation assistant transition), step-by-step guidance, estimated timelines
 
-**AI-Powered Workflow Insights**
-- Functionality: LLM-driven analysis engine that examines all stored metrics and generates personalized, actionable recommendations for workflow optimization
-- Purpose: Surface hidden patterns, identify bottlenecks, and provide data-driven suggestions to improve collaboration effectiveness
-- Trigger: User clicks "Generate Insights" button on Insights tab
-- Progression: Click generate → AI collects all available metrics → LLM analyzes patterns → Generates 5 categorized insights → Displays overall score → Shows priority areas → User expands insights for detailed recommendations → Can re-analyze with updated data
-- Success criteria: Analysis completes in < 10 seconds; generates exactly 5 diverse insights; recommendations are specific and actionable; severity levels are accurate; overall score reflects actual performance; insights are non-repetitive
+**Load Testing Simulator**
+- Functionality: Simulates production healthcare loads across AI platforms to validate capacity
+- Purpose: Prove systems can handle real-world medical volumes before cutover
+- Trigger: User configures load test parameters and runs simulation
+- Progression: Define test scenario (concurrent users, requests/sec, data volume) → Select target platforms → Run load test → Monitor performance metrics → Identify breaking points → Generate capacity report
+- Success criteria: Supports realistic healthcare patterns (morning surge, emergency spikes), measures latency at percentiles (p50, p95, p99), identifies bottlenecks
 
-**Collaborative Annotation System**
-- Functionality: Real-time annotation and commenting system that allows users to mark, tag, and discuss specific metrics, events, or analysis results with collaborative sync
-- Purpose: Enable team context sharing, important moment marking, and asynchronous collaboration through persistent notes
-- Trigger: User clicks "New Annotation" and creates note attached to any system entity
-- Progression: Click new annotation → Select target type and category → Enter content and tags → Save → Annotation broadcasts to all clients → Appears in activity feed → Team members can resolve or comment → Filterable by category, status, search terms
-- Success criteria: Annotations sync instantly across clients; support 5 categories and 5 target types; full-text search works; resolved/unresolved filtering accurate; tags are editable; delete removes from all clients; timestamps are accurate
+**Stakeholder Communication Hub**
+- Functionality: Centralized communication system for coordinating transition across clinical and technical teams
+- Purpose: Keep all stakeholders informed and aligned throughout transition
+- Trigger: User posts update, milestone, or alert
+- Progression: Compose message → Tag stakeholders → Select priority → Broadcast → Track read receipts → Collect feedback → Archive communications
+- Success criteria: Role-based access (clinical, technical, executive), priority levels, searchable archive, notification preferences
 
 ## Edge Case Handling
 
-- **No Data Available**: Display elegant empty states with sample data generation options
-- **Analysis Timeout**: Show progress indicators and allow cancellation with partial results
-- **Invalid Protocol Configuration**: Highlight specific errors with inline corrections
-- **Hardware Not Connected**: Graceful fallback to simulation mode with visual indicator
-- **Extremely Poor Coherence**: Display encouraging messaging with specific improvement suggestions
-- **Browser Compatibility**: Feature detection with graceful degradation for unsupported features
-- **Network Interruption**: Maintain local state and display connection status with auto-reconnect via heartbeat mechanism
-- **Rapid Activity Bursts**: Throttle activity stream updates to prevent UI overwhelming (max 20 activities shown)
-- **Stale Client Detection**: Remove clients that haven't sent heartbeat in 10s with graceful leave notification
-- **Multiple Browser Tabs**: Full support for same user in multiple tabs with unique client IDs
-- **Session Isolation**: Different session IDs ensure no cross-contamination between independent collaborative sessions
-- **WebGL Not Available**: Display fallback message for 3D visualization with graceful degradation
-- **Low-Performance Devices**: Automatically reduce particle count and physics simulation quality
-- **Large Network Graphs**: Cap maximum nodes at 30 to maintain performance while showing complex relationships
-- **LLM API Failure**: Display friendly error message with retry option; never expose technical error details
-- **Empty Data for Insights**: Generate insights based on sample/mock data with clear indication
-- **Malformed LLM Response**: Catch JSON parse errors and retry with modified prompt
-- **Export During Data Collection**: Show progress indicator; allow cancellation
-- **Large Export Files**: Warn user if export exceeds 10MB; compress if possible
-- **Annotation Sync Conflict**: Last-write-wins for edits; show conflict indicator if detected
-- **Annotation Flood Protection**: Rate limit to 10 annotations per minute per user
-- **Tag Duplication**: Prevent duplicate tags in same annotation
-- **Deleted Annotation Reference**: Handle gracefully if annotation referenced elsewhere is deleted
+- **API Quota Exceeded**: Show clear alerts when approaching limits, suggest rate limiting or platform upgrade
+- **Platform Outage**: Display real-time status indicators, automatically failover to backup monitoring
+- **Incomplete Assessment**: Save progress and allow resumption, highlight missing data requirements
+- **Migration Conflict**: Detect schema mismatches, provide conflict resolution UI with medical context preservation
+- **Timeline Deadline Miss**: Auto-adjust dependent tasks, alert stakeholders, suggest mitigation strategies
+- **Compliance Violation**: Immediate red alert with specific regulation breached, block transition until resolved
+- **Load Test Timeout**: Show partial results, identify timeout cause, suggest infrastructure improvements
+- **News Feed Unavailable**: Cache last 100 items, show staleness indicator, retry with exponential backoff
+- **Concurrent Transitions**: Support multiple simultaneous transitions with resource isolation
+- **Capacity Spike**: Detect anomalies in real-time metrics, alert immediately, suggest autoscaling
+- **Stakeholder Offline**: Queue messages for delivery, show notification status, escalate critical items
+- **Broken Adapter Code**: Validate generated code before download, include test suite, provide troubleshooting
+- **Medical Terminology Mismatch**: Highlight code system incompatibilities (ICD-10, SNOMED, LOINC), provide mapping suggestions
+- **Regulatory Updates**: Monitor for regulation changes, assess impact on active transitions, notify affected stakeholders
+- **Infrastructure Degradation**: Track performance trends, predict failures before they occur, recommend preventive maintenance
+- **Cross-Platform Version Drift**: Detect API version mismatches, warn about deprecations, auto-generate compatibility shims
 
 ## Design Direction
 
-The design should evoke the feeling of working with advanced scientific instrumentation in a cyberpunk research lab - sophisticated technical aesthetics with neon accents, geometric precision, and data visualization that feels both analytical and beautiful. Think oscilloscopes, spectrum analyzers, and holographic interfaces with a dark, focused atmosphere punctuated by vibrant data streams.
+The design should evoke the feeling of a mission-critical control center for healthcare infrastructure - calm confidence with medical-grade precision, enterprise dashboard sophistication with real-time monitoring aesthetics, and clear visual hierarchy that guides operators through complex transitions. Think NASA mission control meets modern healthcare IT command center: professional, trustworthy, information-dense yet scannable, with health status indicators that provide instant situational awareness.
 
 ## Color Selection
 
-A dark, technical color scheme with electric accents that emphasize data and active states.
+A professional healthcare command center color scheme that balances clinical trust with operational urgency.
 
-- **Primary Color**: Deep Purple (`oklch(0.35 0.15 290)`) - Represents the core SpiralSafe brand, used for primary actions and key interface elements. Conveys sophistication and technical depth.
+- **Primary Color**: Medical Blue (`oklch(0.55 0.15 240)`) - Represents healthcare trust and stability, used for primary actions and navigation. Conveys professional medical technology.
 - **Secondary Colors**: 
-  - Electric Cyan (`oklch(0.75 0.15 195)`) - Used for spectral visualization, active states, and data streams. Represents data flow and analysis.
-  - Deep Navy (`oklch(0.20 0.08 250)`) - Card backgrounds and secondary surfaces. Provides depth without being pure black.
-- **Accent Color**: Neon Green (`oklch(0.80 0.20 140)`) - Success states, active connections, real-time indicators. Commands attention for critical information.
+  - Healthcare Green (`oklch(0.65 0.18 145)`) - Success states, healthy system status, approved transitions. Represents positive health outcomes.
+  - Clinical Gray (`oklch(0.25 0.02 240)`) - Card backgrounds and secondary surfaces. Provides professional neutral base.
+- **Accent Color**: Alert Amber (`oklch(0.75 0.15 70)`) - Warnings, attention needed, approaching limits. Medical alert color that demands action without panic.
+- **Critical Red**: `oklch(0.55 0.22 25)` - Critical alerts, compliance violations, system failures. Reserved for urgent medical-priority issues.
 - **Foreground/Background Pairings**:
-  - Background Dark (`oklch(0.12 0.02 270)`): Light Gray text (`oklch(0.95 0.01 270)`) - Ratio 14.2:1 ✓
-  - Deep Navy (`oklch(0.20 0.08 250)`): White text (`oklch(0.98 0 0)`) - Ratio 11.8:1 ✓
-  - Deep Purple (`oklch(0.35 0.15 290)`): White text (`oklch(0.98 0 0)`) - Ratio 6.2:1 ✓
-  - Electric Cyan (`oklch(0.75 0.15 195)`): Dark text (`oklch(0.15 0.02 270)`) - Ratio 9.4:1 ✓
-  - Neon Green (`oklch(0.80 0.20 140)`): Dark text (`oklch(0.15 0.02 270)`) - Ratio 10.8:1 ✓
+  - Background Light (`oklch(0.96 0.01 240)`): Dark Gray text (`oklch(0.20 0.02 240)`) - Ratio 13.1:1 ✓
+  - Clinical Gray (`oklch(0.25 0.02 240)`): White text (`oklch(0.98 0 0)`) - Ratio 12.4:1 ✓
+  - Medical Blue (`oklch(0.55 0.15 240)`): White text (`oklch(0.98 0 0)`) - Ratio 5.8:1 ✓
+  - Healthcare Green (`oklch(0.65 0.18 145)`): White text (`oklch(0.98 0 0)`) - Ratio 4.9:1 ✓
+  - Alert Amber (`oklch(0.75 0.15 70)`): Dark text (`oklch(0.20 0.02 240)`) - Ratio 9.2:1 ✓
 
 ## Font Selection
 
-Fonts should bridge technical precision with futuristic aesthetics - monospace for data and metrics, a technical sans-serif for interface elements.
+Fonts should communicate enterprise reliability and medical professionalism - clean sans-serif for readability, monospace for data and technical metrics.
 
 - **Typographic Hierarchy**:
-  - H1 (Page Titles): Space Grotesk Bold/36px/tight letter-spacing (-0.02em)
-  - H2 (Section Headers): Space Grotesk Bold/24px/tight letter-spacing (-0.01em)
-  - H3 (Card Titles): Space Grotesk SemiBold/18px/normal letter-spacing
-  - Body Text: Space Grotesk Regular/16px/relaxed line-height (1.6)
-  - Data/Metrics: JetBrains Mono Medium/14px/tabular numbers
-  - Labels: Space Grotesk Medium/14px/uppercase/wide letter-spacing (0.05em)
+  - H1 (Page Titles): Inter Bold/32px/tight letter-spacing (-0.01em)
+  - H2 (Section Headers): Inter SemiBold/24px/normal letter-spacing
+  - H3 (Card Titles): Inter SemiBold/18px/normal letter-spacing
+  - Body Text: Inter Regular/15px/relaxed line-height (1.6)
+  - Data/Metrics: IBM Plex Mono Medium/14px/tabular numbers
+  - Labels: Inter Medium/13px/uppercase/wide letter-spacing (0.04em)
 
 ## Animations
 
-Animations should emphasize data flow and state transitions with precision. Use subtle particle effects for analysis processes, smooth easing for navigation, and snappy feedback for interactions. Key moments like classification reveals or test completions deserve celebratory micro-interactions with elastic easing. Keep loading states animated to suggest active processing rather than static waiting.
+Animations should communicate system status changes and data flow without distraction. Use smooth transitions for dashboard updates, pulse effects for real-time metrics, and subtle progress indicators for long-running processes. Critical alerts deserve attention-grabbing entrance animations. Keep monitoring visualizations fluid to suggest live data without being distracting during long observation periods.
 
 ## Component Selection
 
 - **Components**:
-  - Cards: Primary container for each tool/metric, with subtle glow borders on hover
-  - Tabs: Navigate between different analysis views within tools
-  - Dialog: Modal overlays for detailed test configurations
-  - Progress: Linear and circular variants for analysis processes
-  - Badge: Display status indicators (passing/failing, connected/disconnected)
-  - Slider: Adjust analysis parameters like frequency ranges
-  - Switch: Toggle between simulation and live modes
-  - Tooltip: Explain technical terms and metrics
-  - Accordion: Expandable sections for primitive documentation
-  - Separator: Visual breaks between tool sections
+  - Cards: Primary container for metrics and status panels with subtle borders
+  - Tabs: Navigate between different transition phases and monitoring views
+  - Dialog: Modal overlays for detailed configurations and alerts
+  - Progress: Linear and circular variants for migration and testing processes
+  - Badge: Display system status (healthy, degraded, critical, compliant, at-risk)
+  - Slider: Adjust load testing parameters and threshold values
+  - Switch: Toggle between simulation and live modes, enable/disable monitoring
+  - Tooltip: Explain medical terminology, regulatory requirements, and technical metrics
+  - Alert: System alerts for capacity warnings, compliance issues, and phase completions
+  - Table: Display API compatibility matrices, migration field mappings, and timeline tasks
+  - Separator: Visual breaks between dashboard sections
   
 - **Customizations**:
-  - Waveform Visualizer: Custom canvas-based component for spectral analysis using D3
-  - Classification Wheel: Custom SVG component for Sorting Hat interface
-  - Protocol Matrix: Custom grid component showing 3FA test results
-  - Hardware Monitor: Custom component with real-time input/output display
-  - Coherence Meter: Custom radial gauge component
-  - 3D Network Graph: Custom Three.js scene with physics simulation, particle systems, and dynamic lighting
+  - Capacity Gauge: Custom radial gauge showing percentage of API limits, storage, compute
+  - Timeline Visualizer: Custom Gantt-style component showing transition phases and dependencies using D3
+  - Compatibility Matrix: Custom grid showing API parity across platforms with color-coded cells
+  - Real-Time Metrics Stream: Custom component with live-updating charts and trend lines
+  - Convergence News Feed: Custom feed component with impact badges and platform logos
+  - Infrastructure Health Map: Custom visualization showing system topology with health indicators
   
 - **States**:
-  - Buttons: Default with purple gradient, hover lifts with glow, active scales down, disabled reduces opacity to 40%
-  - Inputs: Default with subtle cyan border, focus expands border and adds glow, error state with red border and shake animation
-  - Cards: Default with dark navy background, hover adds cyan border glow, active state for selected tools
+  - Buttons: Default with medical blue, hover adds slight elevation, active scales slightly, disabled at 50% opacity
+  - Inputs: Default with neutral border, focus adds blue glow, error shows red border with icon, success adds green checkmark
+  - Cards: Default with light background, hover adds subtle shadow, selected state with blue left border accent
+  - Status Badges: Healthy (green), Warning (amber), Critical (red), Unknown (gray), Compliant (blue check), At-Risk (amber alert)
   
 - **Icon Selection**:
-  - Waveform/SineWave: Spectral analysis
-  - ShieldCheck: Authentication testing
-  - GitBranch: Repository classification
-  - Plugs: Hardware bridges
-  - Cube: Primitives library
-  - UsersThree: Real-time session monitoring
-  - Planet: 3D network visualization
-  - Download: Data export
-  - Sparkle: AI insights
-  - PushPin: Annotations
-  - Lightning: Active/real-time indicators
-  - Check/X: Pass/fail states
-  - Clock: Time-based metrics
-  - ChatCircle/GitCommit: Activity types
-  - Graph: Network topology
-  - Target: Goals and improvements
-  - Lightbulb: Suggestions
-  - Tag: Labels and categories
+  - Activity: Real-time monitoring and live systems
+  - ShieldCheck: Compliance and security validation
+  - Database: Data migration and storage capacity
+  - Swap: Platform transitions and API switching
+  - CalendarBlank: Timeline and scheduling
+  - ChartLine: Metrics, trends, and capacity
+  - Bell: Alerts and notifications
+  - Users: Stakeholder management
+  - Clock: Timelines and deadlines
+  - CheckCircle/XCircle: Success/failure states
+  - Warning: Alerts and attention needed
+  - ArrowsClockwise: Synchronization and refresh
+  - FileText: Documentation and playbooks
+  - Pulse: Live monitoring heartbeat
+  - Hospital: Medical/healthcare context
+  - Cpu: Infrastructure and compute capacity
   
 - **Spacing**:
-  - Page padding: p-8 (32px)
+  - Page padding: p-6 (24px)
   - Card padding: p-6 (24px)
   - Section gaps: gap-6 (24px)
   - Element gaps: gap-4 (16px)
   - Tight spacing: gap-2 (8px)
+  - Dashboard grid: gap-4 (16px)
   
 - **Mobile**:
-  - Stack cards vertically instead of grid layout
-  - Tabs convert to select dropdown on small screens
-  - Reduce padding to p-4 (16px) for page and cards
-  - Waveform visualizations scale to full width with reduced height
-  - Bottom navigation for main tool selection on mobile
+  - Stack dashboard cards vertically with full width
+  - Tabs convert to dropdown menu on screens < 768px
+  - Timeline switches to vertical layout
+  - Reduce padding to p-4 (16px)
+  - Metrics displayed in stacked cards instead of grid
+  - Bottom navigation for main sections on mobile
+  - Horizontal scroll for wide tables with sticky first column
