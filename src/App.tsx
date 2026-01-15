@@ -9,13 +9,15 @@ import { AuthTester } from '@/components/AuthTester'
 import { HardwareBridge } from '@/components/HardwareBridge'
 import { PrimitivesLibrary } from '@/components/PrimitivesLibrary'
 import { SessionMonitor } from '@/components/SessionMonitor'
+import { CoherenceConstellation } from '@/components/CoherenceConstellation'
 import { 
   Waveform, 
   ShieldCheck, 
   Plugs, 
   Cube, 
   SortAscending,
-  UsersThree
+  UsersThree,
+  Planet
 } from '@phosphor-icons/react'
 
 function App() {
@@ -67,7 +69,7 @@ function App() {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 gap-2 bg-transparent">
+            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 gap-2 bg-transparent">
               <TabsTrigger 
                 value="sorting" 
                 className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
@@ -115,6 +117,14 @@ function App() {
                 <UsersThree size={18} />
                 <span className="hidden sm:inline">Session</span>
                 <span className="sm:hidden">Live</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="constellation"
+                className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Planet size={18} />
+                <span className="hidden sm:inline">Constellation</span>
+                <span className="sm:hidden">3D</span>
               </TabsTrigger>
             </TabsList>
 
@@ -259,6 +269,31 @@ function App() {
                   </div>
                 </Card>
                 <SessionMonitor />
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="constellation" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Card className="p-6 mb-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10">
+                      <Planet size={32} className="text-primary" weight="duotone" />
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-2xl font-bold mb-2">Coherence Constellation</h2>
+                      <p className="text-muted-foreground">
+                        Visualize collaborative networks in 3D space with real-time physics simulation. 
+                        Watch as nodes representing users, AI systems, and repositories interact through dynamic 
+                        connection patterns, revealing the hidden architecture of collaborative workflows.
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+                <CoherenceConstellation />
               </motion.div>
             </TabsContent>
           </Tabs>

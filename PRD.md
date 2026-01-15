@@ -54,6 +54,13 @@ This platform combines multiple sophisticated evaluation systems - spectral anal
 - Progression: Start session → Auto-broadcast presence → Other participants join from different tabs/windows → Real-time metric sync → Activity stream visualization → Simulated actions broadcast to all clients → End session with summary
 - Success criteria: Metrics sync instantly (< 100ms), participant join/leave events broadcast to all clients, activity updates appear in real-time across all sessions, WebSocket connection status clearly indicated, supports multiple simultaneous sessions across browser tabs
 
+**Coherence Constellation 3D Visualization**
+- Functionality: Real-time 3D network visualization using Three.js that maps collaborative relationships between users, AI systems, and repositories with physics-based animation
+- Purpose: Reveals the hidden architecture of collaborative workflows through spatial relationships, connection patterns, and network topology
+- Trigger: User navigates to Constellation tab and starts visualization
+- Progression: Configure parameters (node count, connection density, rotation speed, physics) → Start visualization → Watch network form and evolve → Nodes pulse with activity → Connections show strength → Global coherence metric updates → Pause/reset as needed
+- Success criteria: Smooth 60fps 3D rendering, intuitive controls, visually striking aesthetic with glowing nodes and dynamic connections, real-time coherence scoring, responsive physics simulation, parameter changes update network instantly
+
 ## Edge Case Handling
 
 - **No Data Available**: Display elegant empty states with sample data generation options
@@ -67,6 +74,9 @@ This platform combines multiple sophisticated evaluation systems - spectral anal
 - **Stale Client Detection**: Remove clients that haven't sent heartbeat in 10s with graceful leave notification
 - **Multiple Browser Tabs**: Full support for same user in multiple tabs with unique client IDs
 - **Session Isolation**: Different session IDs ensure no cross-contamination between independent collaborative sessions
+- **WebGL Not Available**: Display fallback message for 3D visualization with graceful degradation
+- **Low-Performance Devices**: Automatically reduce particle count and physics simulation quality
+- **Large Network Graphs**: Cap maximum nodes at 30 to maintain performance while showing complex relationships
 
 ## Design Direction
 
@@ -124,6 +134,7 @@ Animations should emphasize data flow and state transitions with precision. Use 
   - Protocol Matrix: Custom grid component showing 3FA test results
   - Hardware Monitor: Custom component with real-time input/output display
   - Coherence Meter: Custom radial gauge component
+  - 3D Network Graph: Custom Three.js scene with physics simulation, particle systems, and dynamic lighting
   
 - **States**:
   - Buttons: Default with purple gradient, hover lifts with glow, active scales down, disabled reduces opacity to 40%
@@ -137,10 +148,12 @@ Animations should emphasize data flow and state transitions with precision. Use 
   - Plugs: Hardware bridges
   - Cube: Primitives library
   - UsersThree: Real-time session monitoring
+  - Planet: 3D network visualization
   - Lightning: Active/real-time indicators
   - Check/X: Pass/fail states
   - Clock: Time-based metrics
   - ChatCircle/GitCommit: Activity types
+  - Graph: Network topology
   
 - **Spacing**:
   - Page padding: p-8 (32px)
