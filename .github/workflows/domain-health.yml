@@ -105,8 +105,8 @@ jobs:
           
           for domain in "${DOMAINS[@]}"; do
             echo "Checking: $domain"
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 10 "$domain" 2>/dev/null || echo "000")
-            RESPONSE_TIME=$(curl -s -o /dev/null -w "%{time_total}" --connect-timeout 10 "$domain" 2>/dev/null || echo "0")
+            HTTP_CODE=$(curl -s -L --max-redirs 3 -o /dev/null -w "%{http_code}" --connect-timeout 10 "$domain" 2>/dev/null || echo "000")
+            RESPONSE_TIME=$(curl -s -L --max-redirs 3 -o /dev/null -w "%{time_total}" --connect-timeout 10 "$domain" 2>/dev/null || echo "0")
             
             if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "301" ] || [ "$HTTP_CODE" = "302" ]; then
               echo "✅ $domain - HTTP $HTTP_CODE (${RESPONSE_TIME}s)"
