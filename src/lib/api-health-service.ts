@@ -63,12 +63,16 @@ export async function checkDomainHealth(domain: DomainConfig): Promise<HealthChe
     const status = responseTimeMs < HEALTHY_THRESHOLD_MS ? 'healthy' : 
                    responseTimeMs < DEGRADED_THRESHOLD_MS ? 'degraded' : 'unhealthy';
     
+    // In no-cors (opaque) responses, the actual HTTP status is not observable.
+    // Avoid fabricating a 200 status; leave statusCode undefined when unavailable.
+    const statusCode = response.type === 'opaque' ? undefined : response.status;
+    
     return {
       domainId: domain.id,
       url: healthUrl,
       status,
       responseTimeMs,
-      statusCode: response.status || 200,
+      statusCode,
       lastChecked: new Date()
     };
   } catch (error) {
