@@ -51,7 +51,7 @@ export function DomainHealthMonitor() {
 
   const domains = selectedEnvironment === 'all' 
     ? getActiveDomains()
-    : getDomainsByEnvironment(selectedEnvironment === 'production' ? 'production' : 'development');
+    : getDomainsByEnvironment(selectedEnvironment);
 
   const runHealthCheck = useCallback(async () => {
     setIsLoading(true)
