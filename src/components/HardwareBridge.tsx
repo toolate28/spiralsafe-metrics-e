@@ -36,7 +36,6 @@ export function HardwareBridge() {
 
   // API status check hook for autonomous monitoring
   const checkApiStatus = useCallback(() => {
-    const startTime = performance.now()
     // Simulate API health check
     const responseTime = Math.random() * 50 + 10
     const isAvailable = Math.random() > 0.1 // 90% availability
