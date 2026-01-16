@@ -1,11 +1,56 @@
+import { createContext, useContext, useState, ReactNode } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Sparkle, CheckCircle, XCircle, BookOpen } from '@phosphor-icons/react'
 
+// Ethics context for H&&S principles
+interface EthicsContextType {
+  principlesEnabled: boolean
+  atomTracking: boolean
+  transparencyLevel: 'full' | 'partial' | 'minimal'
+}
+
+const defaultEthics: EthicsContextType = {
+  principlesEnabled: true,
+  atomTracking: true,
+  transparencyLevel: 'full'
+}
+
+const EthicsContext = createContext<EthicsContextType>(defaultEthics)
+
+// Export context hook for use in other components
+export const useEthics = () => useContext(EthicsContext)
+
+// Ethics provider component
+export function EthicsProvider({ children }: { children: ReactNode }) {
+  const [ethics] = useState<EthicsContextType>(defaultEthics)
+  
+  return (
+    <EthicsContext.Provider value={ethics}>
+      {children}
+    </EthicsContext.Provider>
+  )
+}
+
 export function HopeSaucedPhilosophy() {
+  const ethics = useEthics()
+  
   return (
     <div className="space-y-6">
+      {/* Ethics Status Badge */}
+      <div className="flex items-center gap-2 text-xs">
+        <Badge variant={ethics.principlesEnabled ? 'default' : 'secondary'}>
+          Principles: {ethics.principlesEnabled ? 'Active' : 'Inactive'}
+        </Badge>
+        <Badge variant={ethics.atomTracking ? 'default' : 'secondary'}>
+          ATOM: {ethics.atomTracking ? 'Tracking' : 'Disabled'}
+        </Badge>
+        <Badge variant="outline">
+          Transparency: {ethics.transparencyLevel}
+        </Badge>
+      </div>
+      
       <Card className="border-2" style={{ borderImage: 'linear-gradient(135deg, oklch(0.45 0.18 280) 0%, oklch(0.70 0.12 200) 100%) 1' }}>
         <CardHeader>
           <div className="flex items-center gap-3">

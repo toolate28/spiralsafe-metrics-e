@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -15,12 +15,45 @@ interface BridgeTest {
   compatibility: number
 }
 
+// API status for autonomous monitoring
+interface ApiStatus {
+  lastCheck: number
+  isAvailable: boolean
+  responseTime: number
+}
+
 export function HardwareBridge() {
   const [selectedDevice, setSelectedDevice] = useState('')
   const [selectedApp, setSelectedApp] = useState('')
   const [isTesting, setIsTesting] = useState(false)
   const [testResult, setTestResult] = useState<BridgeTest | null>(null)
   const [inputBuffer, setInputBuffer] = useState<string[]>([])
+  const [apiStatus, setApiStatus] = useState<ApiStatus>({
+    lastCheck: 0,
+    isAvailable: true,
+    responseTime: 0
+  })
+
+  // API status check hook for autonomous monitoring
+  const checkApiStatus = useCallback(() => {
+    const startTime = performance.now()
+    // Simulate API health check
+    const responseTime = Math.random() * 50 + 10
+    const isAvailable = Math.random() > 0.1 // 90% availability
+    
+    setApiStatus({
+      lastCheck: Date.now(),
+      isAvailable,
+      responseTime: Math.round(responseTime)
+    })
+  }, [])
+
+  // Autonomous API health monitoring
+  useEffect(() => {
+    checkApiStatus()
+    const interval = setInterval(checkApiStatus, 30000) // Check every 30 seconds
+    return () => clearInterval(interval)
+  }, [checkApiStatus])
 
   const devices = [
     { id: 'tartarus-pro', name: 'Razer Tartarus Pro', type: 'Gaming Keypad' },
@@ -114,7 +147,7 @@ export function HardwareBridge() {
 
         <Button 
           onClick={runDiagnostic} 
-          disabled={!selectedDevice || !selectedApp || isTesting}
+          disabled={!selectedDevice || !selectedApp || isTesting || !apiStatus.isAvailable}
           className="w-full mt-6"
         >
           {isTesting ? (
@@ -135,6 +168,21 @@ export function HardwareBridge() {
             </>
           )}
         </Button>
+
+        {/* API Status Display */}
+        <div className="mt-4 flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2">
+            <div className={`w-2 h-2 rounded-full ${apiStatus.isAvailable ? 'bg-green-500' : 'bg-red-500'}`} />
+            <span className="text-muted-foreground">
+              API {apiStatus.isAvailable ? 'Available' : 'Unavailable'}
+            </span>
+          </div>
+          {apiStatus.lastCheck > 0 && (
+            <span className="text-muted-foreground font-mono">
+              {apiStatus.responseTime}ms
+            </span>
+          )}
+        </div>
       </Card>
 
       {inputBuffer.length > 0 && (

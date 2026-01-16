@@ -7,12 +7,24 @@ import { Badge } from '@/components/ui/badge'
 import { Play, Pause, ArrowsClockwise } from '@phosphor-icons/react'
 import * as d3 from 'd3'
 
+// Local metrics interface for autonomous monitoring
+interface LocalMetrics {
+  coherenceHistory: number[]
+  lastUpdate: number
+  avgCoherence: number
+}
+
 export function SpectralAnalyzer() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isRunning, setIsRunning] = useState(false)
   const [frequency, setFrequency] = useState([50])
   const [amplitude, setAmplitude] = useState([80])
   const [coherenceScore, setCoherenceScore] = useState(0)
+  const [localMetrics, setLocalMetrics] = useState<LocalMetrics>({
+    coherenceHistory: [],
+    lastUpdate: Date.now(),
+    avgCoherence: 0
+  })
   const animationRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
@@ -68,7 +80,19 @@ export function SpectralAnalyzer() {
       ctx.stroke()
 
       const rawCoherence = Math.abs(Math.sin(phase * 0.1)) * amp
-      setCoherenceScore(Math.round(rawCoherence * 100))
+      const newScore = Math.round(rawCoherence * 100)
+      setCoherenceScore(newScore)
+      
+      // Update local metrics for autonomous monitoring
+      setLocalMetrics(prev => {
+        const history = [...prev.coherenceHistory, newScore].slice(-100)
+        const avg = history.reduce((a, b) => a + b, 0) / history.length
+        return {
+          coherenceHistory: history,
+          lastUpdate: Date.now(),
+          avgCoherence: Math.round(avg)
+        }
+      })
 
       if (isRunning) {
         phase += 0.05
@@ -96,6 +120,11 @@ export function SpectralAnalyzer() {
     setFrequency([50])
     setAmplitude([80])
     setCoherenceScore(0)
+    setLocalMetrics({
+      coherenceHistory: [],
+      lastUpdate: Date.now(),
+      avgCoherence: 0
+    })
     
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext('2d')
@@ -174,6 +203,27 @@ export function SpectralAnalyzer() {
           </div>
         </div>
       </Card>
+
+      {localMetrics.coherenceHistory.length > 0 && (
+        <Card className="p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-sm font-medium uppercase tracking-wide text-muted-foreground mb-1">
+                Average Coherence
+              </h3>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold font-mono">{localMetrics.avgCoherence}%</span>
+                <Badge variant={localMetrics.avgCoherence > 60 ? 'default' : 'secondary'}>
+                  {localMetrics.avgCoherence > 60 ? '> 60% threshold' : 'Below threshold'}
+                </Badge>
+              </div>
+            </div>
+            <div className="text-right">
+              <span className="text-xs text-muted-foreground">Samples: {localMetrics.coherenceHistory.length}</span>
+            </div>
+          </div>
+        </Card>
+      )}
 
       <div className="flex gap-3">
         <Button onClick={toggleAnalysis} className="flex-1">

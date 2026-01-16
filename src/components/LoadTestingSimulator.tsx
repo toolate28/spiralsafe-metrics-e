@@ -1,32 +1,78 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Play, CheckCircle } from '@phosphor-icons/react'
 
+// Simulation lifecycle phases for autonomous testing
+type SimPhase = 'idle' | 'initializing' | 'running' | 'complete'
+
+interface LoadTestResult {
+  platform: string
+  requestsPerSecond: number
+  p50Latency: number
+  p95Latency: number
+  p99Latency: number
+  errorRate: string
+  throughput: string
+  timestamp: number
+}
+
 export function LoadTestingSimulator() {
   const [platform, setPlatform] = useState('')
   const [isRunning, setIsRunning] = useState(false)
-  const [results, setResults] = useState<any>(null)
+  const [simPhase, setSimPhase] = useState<SimPhase>('idle')
+  const [results, setResults] = useState<LoadTestResult | null>(null)
+  const abortRef = useRef<boolean>(false)
 
-  const runLoadTest = async () => {
+  // Lifecycle effect for simulation runs
+  useEffect(() => {
+    if (!isRunning || !platform) return
+
+    abortRef.current = false
+    let mounted = true
+
+    const runSimulation = async () => {
+      setSimPhase('initializing')
+      
+      // Initialization phase
+      await new Promise(resolve => setTimeout(resolve, 500))
+      if (!mounted || abortRef.current) return
+      
+      setSimPhase('running')
+      
+      // Running phase
+      await new Promise(resolve => setTimeout(resolve, 2500))
+      if (!mounted || abortRef.current) return
+      
+      setSimPhase('complete')
+      setResults({
+        platform,
+        requestsPerSecond: Math.floor(Math.random() * 1000) + 500,
+        p50Latency: Math.floor(Math.random() * 100) + 50,
+        p95Latency: Math.floor(Math.random() * 300) + 200,
+        p99Latency: Math.floor(Math.random() * 500) + 400,
+        errorRate: (Math.random() * 2).toFixed(2),
+        throughput: (Math.random() * 50 + 20).toFixed(1),
+        timestamp: Date.now()
+      })
+      
+      setIsRunning(false)
+    }
+
+    runSimulation()
+
+    return () => {
+      mounted = false
+      abortRef.current = true
+    }
+  }, [isRunning, platform])
+
+  const startLoadTest = () => {
     if (!platform) return
-    
+    setResults(null)
     setIsRunning(true)
-    await new Promise(resolve => setTimeout(resolve, 3000))
-    
-    setResults({
-      platform,
-      requestsPerSecond: Math.floor(Math.random() * 1000) + 500,
-      p50Latency: Math.floor(Math.random() * 100) + 50,
-      p95Latency: Math.floor(Math.random() * 300) + 200,
-      p99Latency: Math.floor(Math.random() * 500) + 400,
-      errorRate: (Math.random() * 2).toFixed(2),
-      throughput: (Math.random() * 50 + 20).toFixed(1)
-    })
-    
-    setIsRunning(false)
   }
 
   return (
@@ -60,10 +106,17 @@ export function LoadTestingSimulator() {
                 </SelectContent>
               </Select>
             </div>
-            <Button onClick={runLoadTest} disabled={!platform || isRunning} className="w-full">
+            <Button onClick={startLoadTest} disabled={!platform || isRunning} className="w-full">
               <Play size={18} className="mr-2" />
-              {isRunning ? 'Running Load Test...' : 'Start Load Test'}
+              {simPhase === 'initializing' ? 'Initializing...' : 
+               simPhase === 'running' ? 'Running Load Test...' : 
+               'Start Load Test'}
             </Button>
+            {isRunning && (
+              <div className="text-xs text-muted-foreground text-center">
+                Phase: {simPhase}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

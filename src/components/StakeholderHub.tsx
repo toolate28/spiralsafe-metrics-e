@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { PaperPlaneTilt, User } from '@phosphor-icons/react'
+import { PaperPlaneTilt, User, ClockCounterClockwise } from '@phosphor-icons/react'
 
 interface Message {
   id: string
@@ -14,6 +14,14 @@ interface Message {
   content: string
   priority: 'normal' | 'high' | 'critical'
   timestamp: string
+}
+
+// Provenance log entry for stakeholder actions
+interface ProvenanceLog {
+  id: string
+  action: 'MESSAGE_POSTED' | 'MESSAGE_READ' | 'HUB_LOADED'
+  timestamp: number
+  details: string
 }
 
 export function StakeholderHub() {
@@ -38,6 +46,25 @@ export function StakeholderHub() {
 
   const [newMessage, setNewMessage] = useState('')
   const [priority, setPriority] = useState<'normal' | 'high' | 'critical'>('normal')
+  const [provenanceLog, setProvenanceLog] = useState<ProvenanceLog[]>([
+    {
+      id: crypto.randomUUID(),
+      action: 'HUB_LOADED',
+      timestamp: Date.now(),
+      details: 'Stakeholder Hub initialized'
+    }
+  ])
+
+  // Log provenance action
+  const logAction = useCallback((action: ProvenanceLog['action'], details: string) => {
+    const entry: ProvenanceLog = {
+      id: crypto.randomUUID(),
+      action,
+      timestamp: Date.now(),
+      details
+    }
+    setProvenanceLog(prev => [...prev.slice(-9), entry]) // Keep last 10 entries
+  }, [])
 
   const postMessage = () => {
     if (!newMessage.trim()) return
@@ -52,6 +79,7 @@ export function StakeholderHub() {
     }
 
     setMessages((current) => [message, ...(current || [])])
+    logAction('MESSAGE_POSTED', `Posted message with ${priority} priority`)
     setNewMessage('')
     setPriority('normal')
   }
@@ -139,6 +167,32 @@ export function StakeholderHub() {
           </div>
         </CardContent>
       </Card>
+
+      {provenanceLog.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <ClockCounterClockwise size={20} className="text-muted-foreground" />
+              <CardTitle className="text-sm">Provenance Log</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {provenanceLog.slice().reverse().map((entry) => (
+                <div key={entry.id} className="text-xs p-2 bg-muted/50 rounded font-mono">
+                  <span className="text-muted-foreground">
+                    {new Date(entry.timestamp).toLocaleTimeString()}
+                  </span>
+                  {' - '}
+                  <span className="text-primary">{entry.action}</span>
+                  {': '}
+                  <span>{entry.details}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }
