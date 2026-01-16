@@ -33,10 +33,16 @@ on:
 env:
   NODE_VERSION: '20'
 
+# Minimal permissions following principle of least privilege
+permissions:
+  contents: read
+
 jobs:
   build-and-lint:
     name: Build & Lint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -67,6 +73,8 @@ jobs:
     name: Domain Health Check
     runs-on: ubuntu-latest
     needs: build-and-lint
+    permissions:
+      contents: read
     outputs:
       health-status: ${{ steps.health-check.outputs.status }}
       healthy-count: ${{ steps.health-check.outputs.healthy-count }}
@@ -132,6 +140,8 @@ jobs:
     name: SAIF Risk Assessment
     runs-on: ubuntu-latest
     needs: domain-health-check
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -215,6 +225,8 @@ jobs:
     name: TypeScript Tests
     runs-on: ubuntu-latest
     needs: build-and-lint
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -241,6 +253,7 @@ jobs:
     name: Environment Validation
     runs-on: ubuntu-latest
     needs: [domain-health-check, saif-assessment]
+    permissions: {}
     strategy:
       matrix:
         environment: [development, production]
@@ -277,6 +290,7 @@ jobs:
     name: Workflow Summary
     runs-on: ubuntu-latest
     needs: [domain-health-check, saif-assessment, typescript-tests, environment-validation]
+    permissions: {}
     if: always()
     steps:
       - name: Generate summary
