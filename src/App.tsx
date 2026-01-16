@@ -15,7 +15,8 @@ import {
   Pulse,
   Hospital,
   Sparkle,
-  Globe
+  Globe,
+  BookOpen
 } from '@phosphor-icons/react'
 import { InfrastructureReadiness } from '@/components/InfrastructureReadiness'
 import { CompatibilityMatrix } from '@/components/CompatibilityMatrix'
@@ -29,6 +30,7 @@ import { LoadTestingSimulator } from '@/components/LoadTestingSimulator'
 import { StakeholderHub } from '@/components/StakeholderHub'
 import { HopeSaucedPhilosophy } from '@/components/HopeSaucedPhilosophy'
 import { DomainHealthMonitor } from '@/components/DomainHealthMonitor'
+import { RulesEngine } from '@/components/RulesEngine'
 
 function App() {
   const [activeTab, setActiveTab] = useState('philosophy')
@@ -81,7 +83,7 @@ function App() {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-12 gap-2 bg-muted/50 p-1">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-13 gap-2 bg-muted/50 p-1">
               <TabsTrigger 
                 value="philosophy" 
                 className="flex items-center gap-2 data-[state=active]:partnership-gradient data-[state=active]:text-white"
@@ -165,6 +167,13 @@ function App() {
               >
                 <Hospital size={18} />
                 <span className="hidden sm:inline">Teams</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="rules"
+                className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <BookOpen size={18} />
+                <span className="hidden sm:inline">Rules</span>
               </TabsTrigger>
             </TabsList>
 
@@ -381,6 +390,16 @@ function App() {
                 transition={{ duration: 0.3 }}
               >
                 <StakeholderHub />
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="rules" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <RulesEngine />
               </motion.div>
             </TabsContent>
           </Tabs>
