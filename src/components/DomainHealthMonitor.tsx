@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { Separator } from '@/components/ui/separator'
+
 import { 
   Globe, 
   Pulse, 
@@ -23,7 +23,6 @@ import {
   Gauge
 } from '@phosphor-icons/react'
 import { 
-  UNIFIED_DOMAINS, 
   DomainConfig, 
   getActiveDomains,
   getDomainsByEnvironment

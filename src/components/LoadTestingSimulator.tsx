@@ -26,7 +26,7 @@ export function LoadTestingSimulator() {
   const [platform, setPlatform] = useState('')
   const [isRunning, setIsRunning] = useState(false)
   const [simPhase, setSimPhase] = useState<SimPhase>('idle')
-  const [results, setResults] = useState<LoadTestResult | null>(null)
+  const [result, setResult] = useState<LoadTestResult | null>(null)
   const abortRef = useRef<boolean>(false)
 
   // Lifecycle effect for simulation runs
@@ -50,7 +50,7 @@ export function LoadTestingSimulator() {
       if (!mounted || abortRef.current) return
       
       setSimPhase('complete')
-      setResults({
+      setResult({
         platform,
         requestsPerSecond: Math.floor(Math.random() * 1000) + 500,
         p50Latency: Math.floor(Math.random() * 100) + 50,
@@ -74,7 +74,7 @@ export function LoadTestingSimulator() {
 
   const startLoadTest = () => {
     if (!platform) return
-    setResults(null)
+    setResult(null)
     setIsRunning(true)
   }
 
@@ -124,7 +124,7 @@ export function LoadTestingSimulator() {
         </CardContent>
       </Card>
 
-      {results && (
+      {result && (
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -139,27 +139,27 @@ export function LoadTestingSimulator() {
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 bg-muted/50 rounded-lg">
                 <div className="text-sm text-muted-foreground">Requests/Second</div>
-                <div className="text-2xl font-bold font-mono mt-1">{results.requestsPerSecond}</div>
+                <div className="text-2xl font-bold font-mono mt-1">{result.requestsPerSecond}</div>
               </div>
               <div className="p-4 bg-muted/50 rounded-lg">
                 <div className="text-sm text-muted-foreground">P50 Latency</div>
-                <div className="text-2xl font-bold font-mono mt-1">{results.p50Latency}ms</div>
+                <div className="text-2xl font-bold font-mono mt-1">{result.p50Latency}ms</div>
               </div>
               <div className="p-4 bg-muted/50 rounded-lg">
                 <div className="text-sm text-muted-foreground">P95 Latency</div>
-                <div className="text-2xl font-bold font-mono mt-1">{results.p95Latency}ms</div>
+                <div className="text-2xl font-bold font-mono mt-1">{result.p95Latency}ms</div>
               </div>
               <div className="p-4 bg-muted/50 rounded-lg">
                 <div className="text-sm text-muted-foreground">P99 Latency</div>
-                <div className="text-2xl font-bold font-mono mt-1">{results.p99Latency}ms</div>
+                <div className="text-2xl font-bold font-mono mt-1">{result.p99Latency}ms</div>
               </div>
               <div className="p-4 bg-muted/50 rounded-lg">
                 <div className="text-sm text-muted-foreground">Error Rate</div>
-                <div className="text-2xl font-bold font-mono mt-1">{results.errorRate}%</div>
+                <div className="text-2xl font-bold font-mono mt-1">{result.errorRate}%</div>
               </div>
               <div className="p-4 bg-muted/50 rounded-lg">
                 <div className="text-sm text-muted-foreground">Throughput</div>
-                <div className="text-2xl font-bold font-mono mt-1">{results.throughput} MB/s</div>
+                <div className="text-2xl font-bold font-mono mt-1">{result.throughput} MB/s</div>
               </div>
             </div>
           </CardContent>
