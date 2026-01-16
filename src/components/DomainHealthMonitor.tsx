@@ -115,7 +115,7 @@ export function DomainHealthMonitor() {
                 <CardTitle className="text-2xl">Domain Unification Monitor</CardTitle>
                 <CardDescription className="mt-2">
                   VortexForge Autonomy - Unified domain/subdomain health monitoring with SAIF risk assessment.
-                  Maintains corpus with emergent capability threshold &gt;60%.
+                  Maintains corpus with emergent capability threshold greater than 60%.
                 </CardDescription>
               </div>
             </div>

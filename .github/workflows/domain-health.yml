@@ -84,6 +84,8 @@ jobs:
         id: health-check
         run: |
           # Define unified domains to check
+          # NOTE: Keep in sync with src/lib/domain-config.ts UNIFIED_DOMAINS
+          # These are the production domains configured in the domain configuration
           DOMAINS=(
             "https://spiralsafe.vercel.app"
             "https://spiralsafe.pages.dev"
@@ -157,7 +159,11 @@ jobs:
           CQW_SCORE=$((HEALTH_SCORE + RESPONSE_SCORE + TEST_SCORE + CICD_SCORE))
           
           # Calculate Emergence Level
-          UNIFIED_RATIO=$((TOTAL > 0 ? (HEALTHY * 100 / TOTAL) : 0))
+          if [ "$TOTAL" -gt 0 ]; then
+            UNIFIED_RATIO=$((HEALTHY * 100 / TOTAL))
+          else
+            UNIFIED_RATIO=0
+          fi
           EMERGENCE=$((UNIFIED_RATIO * 60 / 100 + HEALTH_SCORE))
           
           # Determine risk level

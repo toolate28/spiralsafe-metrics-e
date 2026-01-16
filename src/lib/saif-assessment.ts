@@ -88,7 +88,9 @@ export function calculateFragmentationScore(domains: DomainConfig[]): number {
   
   // Count unique providers
   const providers = new Set(domains.map(d => d.provider));
-  const providerFragmentation = (providers.size - 1) / Math.max(1, providers.size - 1);
+  // Fragmentation increases with more providers (normalized 0-1)
+  // 1 provider = 0, 2+ providers = proportionally higher
+  const providerFragmentation = providers.size <= 1 ? 0 : (providers.size - 1) / providers.size;
   
   // Count unique environments
   const environments = new Set(domains.map(d => d.environment));

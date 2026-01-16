@@ -25,8 +25,17 @@ export interface HealthCheckSummary {
   lastUpdated: Date;
 }
 
+// Response time thresholds for health status (in milliseconds)
+// These values can be adjusted based on environment or network conditions
+const HEALTHY_THRESHOLD_MS = 1000;
+const DEGRADED_THRESHOLD_MS = 3000;
+
 /**
  * Perform health check on a single domain
+ * 
+ * Note: Using 'no-cors' mode prevents access to response status and headers,
+ * limiting health checks to response time analysis. For production use with
+ * proper health checks, configure CORS on target domains or use a backend proxy.
  */
 export async function checkDomainHealth(domain: DomainConfig): Promise<HealthCheckResult> {
   const config = getEnvironmentConfig();
@@ -42,7 +51,7 @@ export async function checkDomainHealth(domain: DomainConfig): Promise<HealthChe
     
     const response = await fetch(healthUrl, {
       method: 'GET',
-      mode: 'no-cors', // Handle CORS for external domains
+      mode: 'no-cors', // Required for cross-origin domains without CORS headers
       signal: controller.signal
     });
     
@@ -50,10 +59,9 @@ export async function checkDomainHealth(domain: DomainConfig): Promise<HealthChe
     
     const responseTimeMs = Math.round(performance.now() - startTime);
     
-    // With no-cors mode, we can't access response details, so treat completion as success
-    // In production, you'd have proper CORS configured
-    const status = responseTimeMs < 1000 ? 'healthy' : 
-                   responseTimeMs < 3000 ? 'degraded' : 'unhealthy';
+    // With no-cors mode, we determine health status based on response time only
+    const status = responseTimeMs < HEALTHY_THRESHOLD_MS ? 'healthy' : 
+                   responseTimeMs < DEGRADED_THRESHOLD_MS ? 'degraded' : 'unhealthy';
     
     return {
       domainId: domain.id,
