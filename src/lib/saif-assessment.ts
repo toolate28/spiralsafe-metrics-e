@@ -45,7 +45,11 @@ export function calculateCQWScore(metrics: SAIFMetrics): number {
   score += healthRatio * 40;
   
   // Response time performance (20% weight)
-  // Under 500ms = full points, over 3000ms = 0 points
+  // Under 500ms = full points, over 3000ms = 0 points.
+  // We linearly interpolate between 500ms (score = 1) and 3000ms (score = 0):
+  //   rawScore = (3000 - averageResponseTime) / (3000 - 500)
+  // The divisor 2500 is the width of this scoring window (3000ms - 500ms).
+  // The result is then clamped to [0, 1] with Math.max/Math.min to avoid negative or >1 scores.
   const responseScore = Math.max(0, Math.min(1, (3000 - metrics.averageResponseTime) / 2500));
   score += responseScore * 20;
   
