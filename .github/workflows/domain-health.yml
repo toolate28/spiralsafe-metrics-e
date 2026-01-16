@@ -241,7 +241,7 @@ jobs:
         run: npm ci
 
       - name: Run TypeScript type check
-        run: npx tsc --noEmit || true
+        run: npx tsc --noEmit
         
       - name: Report test status
         run: |
