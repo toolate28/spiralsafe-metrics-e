@@ -85,7 +85,11 @@ export function SpectralAnalyzer() {
       
       // Update local metrics for autonomous monitoring
       setLocalMetrics(prev => {
-        const history = [...prev.coherenceHistory, newScore].slice(-100)
+        const history =
+          prev.coherenceHistory.length >= 100
+            ? prev.coherenceHistory.slice(1)
+            : prev.coherenceHistory.slice()
+        history.push(newScore)
         const avg = history.reduce((a, b) => a + b, 0) / history.length
         return {
           coherenceHistory: history,
