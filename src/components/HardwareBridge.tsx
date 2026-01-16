@@ -145,6 +145,7 @@ export function HardwareBridge() {
           </div>
         </div>
 
+        {/* Button disabled when: no device/app selected, test in progress, or API unavailable */}
         <Button 
           onClick={runDiagnostic} 
           disabled={!selectedDevice || !selectedApp || isTesting || !apiStatus.isAvailable}

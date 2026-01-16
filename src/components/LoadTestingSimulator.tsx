@@ -8,6 +8,9 @@ import { Play, CheckCircle } from '@phosphor-icons/react'
 // Simulation lifecycle phases for autonomous testing
 type SimPhase = 'idle' | 'initializing' | 'running' | 'complete'
 
+// Note: useRef is used for abortRef to track cancellation across effect cleanup
+// without causing re-renders, maintaining consistent reference during async operations
+
 interface LoadTestResult {
   platform: string
   requestsPerSecond: number
