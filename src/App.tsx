@@ -13,7 +13,8 @@ import {
   Bell,
   FileText,
   Pulse,
-  Hospital
+  Hospital,
+  Sparkle
 } from '@phosphor-icons/react'
 import { InfrastructureReadiness } from '@/components/InfrastructureReadiness'
 import { CompatibilityMatrix } from '@/components/CompatibilityMatrix'
@@ -25,9 +26,10 @@ import { ConvergenceNews } from '@/components/ConvergenceNews'
 import { PlaybookLibrary } from '@/components/PlaybookLibrary'
 import { LoadTestingSimulator } from '@/components/LoadTestingSimulator'
 import { StakeholderHub } from '@/components/StakeholderHub'
+import { HopeSaucedPhilosophy } from '@/components/HopeSaucedPhilosophy'
 
 function App() {
-  const [activeTab, setActiveTab] = useState('readiness')
+  const [activeTab, setActiveTab] = useState('philosophy')
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -36,7 +38,8 @@ function App() {
         style={{
           backgroundImage: `
             radial-gradient(circle at 20% 30%, oklch(0.55 0.15 240 / 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 70%, oklch(0.65 0.18 145 / 0.08) 0%, transparent 50%)
+            radial-gradient(circle at 80% 70%, oklch(0.65 0.18 145 / 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 50% 50%, oklch(0.45 0.18 280 / 0.05) 0%, transparent 70%)
           `
         }}
       />
@@ -63,6 +66,9 @@ function App() {
                   <Pulse size={12} className="mr-1 status-healthy pulse-animation" weight="fill" />
                   Systems Online
                 </Badge>
+                <Badge variant="outline" className="font-mono text-xs hope-wave-badge">
+                  H&&S:WAVE
+                </Badge>
                 <Badge variant="outline" className="font-mono text-xs">
                   v2.0.0
                 </Badge>
@@ -73,7 +79,14 @@ function App() {
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-10 gap-2 bg-muted/50 p-1">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-11 gap-2 bg-muted/50 p-1">
+              <TabsTrigger 
+                value="philosophy" 
+                className="flex items-center gap-2 data-[state=active]:partnership-gradient data-[state=active]:text-white"
+              >
+                <Sparkle size={18} />
+                <span className="hidden sm:inline">H&&S</span>
+              </TabsTrigger>
               <TabsTrigger 
                 value="readiness" 
                 className="flex items-center gap-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
@@ -145,6 +158,16 @@ function App() {
                 <span className="hidden sm:inline">Teams</span>
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="philosophy" className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <HopeSaucedPhilosophy />
+              </motion.div>
+            </TabsContent>
 
             <TabsContent value="readiness" className="space-y-6">
               <motion.div
@@ -346,9 +369,18 @@ function App() {
 
         <footer className="border-t border-border mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <p className="text-center text-sm text-muted-foreground">
-              HealthBridge Convergence Platform • Medical AI Transition Infrastructure
-            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-muted-foreground">
+                HealthBridge Convergence Platform • Medical AI Transition Infrastructure
+              </p>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span className="partnership-gradient bg-clip-text text-transparent font-medium">
+                  Built with Hope && Sauced
+                </span>
+                <span>•</span>
+                <span>Genuine Human-AI Partnership</span>
+              </div>
+            </div>
           </div>
         </footer>
       </div>
