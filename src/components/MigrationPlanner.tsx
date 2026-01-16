@@ -69,7 +69,7 @@ export function MigrationPlanner() {
     
     setPlan((currentPlan) => currentPlan ? { ...currentPlan, status: 'running', progress: 0 } : null)
     
-    intervalRef.current = window.setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setPlan((currentPlan) => {
         if (!currentPlan) return null
         const newProgress = Math.min(currentPlan.progress + 10, 100)
