@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -6,6 +6,9 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Play, CheckCircle } from '@phosphor-icons/react'
+
+// Lifecycle phases for autonomous migration planning
+type LifecyclePhase = 'plan' | 'develop' | 'test' | 'deploy' | 'complete'
 
 interface MigrationPlan {
   id: string
@@ -15,12 +18,33 @@ interface MigrationPlan {
   estimatedTime: string
   status: 'pending' | 'running' | 'complete'
   progress: number
+  lifecyclePhase?: LifecyclePhase
 }
 
 export function MigrationPlanner() {
   const [sourcePlatform, setSourcePlatform] = useState('')
   const [targetPlatform, setTargetPlatform] = useState('')
   const [plan, setPlan] = useKV<MigrationPlan | null>('migration-plan', null)
+  const [lifecyclePhase, setLifecyclePhase] = useState<LifecyclePhase>('plan')
+  const intervalRef = useRef<number | null>(null)
+
+  // Lifecycle phase management effect
+  useEffect(() => {
+    if (!plan || plan.status !== 'running') return
+
+    const progress = plan.progress
+    if (progress < 25) {
+      setLifecyclePhase('plan')
+    } else if (progress < 50) {
+      setLifecyclePhase('develop')
+    } else if (progress < 75) {
+      setLifecyclePhase('test')
+    } else if (progress < 100) {
+      setLifecyclePhase('deploy')
+    } else {
+      setLifecyclePhase('complete')
+    }
+  }, [plan])
 
   const createMigrationPlan = async () => {
     if (!sourcePlatform || !targetPlatform) return
@@ -32,9 +56,11 @@ export function MigrationPlanner() {
       dataVolume: '2.4 TB',
       estimatedTime: '4-6 hours',
       status: 'pending',
-      progress: 0
+      progress: 0,
+      lifecyclePhase: 'plan'
     }
 
+    setLifecyclePhase('plan')
     setPlan(newPlan)
   }
 
@@ -43,7 +69,7 @@ export function MigrationPlanner() {
     
     setPlan((currentPlan) => currentPlan ? { ...currentPlan, status: 'running', progress: 0 } : null)
     
-    const interval = setInterval(() => {
+    intervalRef.current = window.setInterval(() => {
       setPlan((currentPlan) => {
         if (!currentPlan) return null
         const newProgress = Math.min(currentPlan.progress + 10, 100)
@@ -55,7 +81,11 @@ export function MigrationPlanner() {
       })
     }, 800)
 
-    setTimeout(() => clearInterval(interval), 9000)
+    setTimeout(() => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }, 9000)
   }
 
   return (
@@ -144,6 +174,12 @@ export function MigrationPlanner() {
                   <span className="font-mono font-bold">{plan.progress}%</span>
                 </div>
                 <Progress value={plan.progress} className="h-2" />
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="text-xs text-muted-foreground">Lifecycle Phase:</span>
+                  <Badge variant={lifecyclePhase === 'complete' ? 'default' : 'outline'} className="text-xs uppercase">
+                    {lifecyclePhase}
+                  </Badge>
+                </div>
               </div>
             )}
 

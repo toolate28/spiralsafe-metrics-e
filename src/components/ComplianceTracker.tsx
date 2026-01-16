@@ -1,7 +1,8 @@
+import { useState, useEffect } from 'react'
 import { useKV } from '@github/spark/hooks'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { CheckCircle, Warning } from '@phosphor-icons/react'
+import { CheckCircle, Warning, ClockCounterClockwise } from '@phosphor-icons/react'
 
 interface ComplianceItem {
   id: string
@@ -9,6 +10,15 @@ interface ComplianceItem {
   requirement: string
   status: 'compliant' | 'at-risk'
   lastAudit: string
+}
+
+// ATOM provenance log entry for compliance tracking
+interface ProvenanceEntry {
+  id: string
+  timestamp: number
+  action: string
+  itemId: string
+  details: string
 }
 
 export function ComplianceTracker() {
@@ -64,6 +74,23 @@ export function ComplianceTracker() {
     }
   ])
 
+  // ATOM provenance log for tracking compliance state
+  const [provenanceLog, setProvenanceLog] = useState<ProvenanceEntry[]>([])
+
+  // Log provenance on initial load
+  useEffect(() => {
+    if (items && items.length > 0 && provenanceLog.length === 0) {
+      const entry: ProvenanceEntry = {
+        id: crypto.randomUUID(),
+        timestamp: Date.now(),
+        action: 'COMPLIANCE_LOADED',
+        itemId: 'all',
+        details: `Loaded ${items.length} compliance items`
+      }
+      setProvenanceLog([entry])
+    }
+  }, [items, provenanceLog.length])
+
   const compliantCount = items?.filter(i => i.status === 'compliant').length || 0
   const totalCount = items?.length || 0
 
@@ -117,6 +144,32 @@ export function ComplianceTracker() {
           </div>
         </CardContent>
       </Card>
+
+      {provenanceLog.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <ClockCounterClockwise size={20} className="text-muted-foreground" />
+              <CardTitle className="text-sm">ATOM Provenance Log</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {provenanceLog.map((entry) => (
+                <div key={entry.id} className="text-xs p-2 bg-muted/50 rounded font-mono">
+                  <span className="text-muted-foreground">
+                    {new Date(entry.timestamp).toISOString()}
+                  </span>
+                  {' - '}
+                  <span className="text-primary">{entry.action}</span>
+                  {': '}
+                  <span>{entry.details}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }
