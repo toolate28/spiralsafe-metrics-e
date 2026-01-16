@@ -26,7 +26,7 @@ export function LoadTestingSimulator() {
   const [platform, setPlatform] = useState('')
   const [isRunning, setIsRunning] = useState(false)
   const [simPhase, setSimPhase] = useState<SimPhase>('idle')
-  const [result, setResult] = useState<LoadTestResult | null>(null)
+  const [results, setResults] = useState<LoadTestResult | null>(null)
   const abortRef = useRef<boolean>(false)
 
   // Lifecycle effect for simulation runs
@@ -50,7 +50,7 @@ export function LoadTestingSimulator() {
       if (!mounted || abortRef.current) return
       
       setSimPhase('complete')
-      setResult({
+      setResults({
         platform,
         requestsPerSecond: Math.floor(Math.random() * 1000) + 500,
         p50Latency: Math.floor(Math.random() * 100) + 50,
@@ -74,7 +74,7 @@ export function LoadTestingSimulator() {
 
   const startLoadTest = () => {
     if (!platform) return
-    setResult(null)
+    setResults(null)
     setIsRunning(true)
   }
 
