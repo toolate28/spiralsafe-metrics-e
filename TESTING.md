@@ -51,6 +51,19 @@ pytest tests/test_sample.py
 pytest --collect-only
 ```
 
+Example output:
+```
+collected 6 items
+
+<Package tests>
+  <Module test_sample.py>
+    ...
+<Package bridges>
+  <Package kenl>
+    <Module test_orchestrator.py>
+      ...
+```
+
 ## Test Locations
 
 - **tests/**: Standard test directory for general tests
