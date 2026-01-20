@@ -68,7 +68,9 @@ export function calculateCQWScore(metrics: SAIFMetrics): number {
  * Measures the self-maintaining characteristics of the system
  */
 export function calculateEmergenceLevel(metrics: SAIFMetrics): number {
-  // Emergence = ability to self-maintain > 85% threshold (CHESS-spec Mission requirement)
+  // Emergence = ability to self-maintain > 85% threshold
+  // CHESS-spec Mission: "Stay two-moves ahead of ourselves" requires maintaining 
+  // work quality over 85% to ensure emergent coherence
   const unificationRatio = metrics.totalDomains > 0
     ? metrics.unifiedDomains / metrics.totalDomains
     : 0;
@@ -228,7 +230,9 @@ export function performSAIFAssessment(
 }
 
 /**
- * Check if emergence level meets threshold (>85% per CHESS-spec Mission requirements)
+ * Check if emergence level meets threshold (>85% per CHESS-spec Mission)
+ * The CHESS-spec Mission defines the quality standard: "Stay two-moves ahead 
+ * of ourselves, at all times" which requires maintaining work quality over 85%.
  */
 export function meetsEmergenceThreshold(assessment: SAIFAssessment): boolean {
   return assessment.emergenceLevel > 85;
