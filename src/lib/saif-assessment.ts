@@ -112,13 +112,15 @@ export function calculateFragmentationScore(domains: DomainConfig[]): number {
 
 /**
  * Determine risk level based on CQW and emergence
+ * Thresholds aligned with CHESS-spec Mission (85% quality standard)
  */
 export function determineRiskLevel(cqwScore: number, emergenceLevel: number): SAIFAssessment['riskLevel'] {
   const combinedScore = (cqwScore + emergenceLevel) / 2;
   
-  if (combinedScore >= 80) return 'low';
-  if (combinedScore >= 60) return 'medium';
-  if (combinedScore >= 40) return 'high';
+  // CHESS-spec aligned thresholds: 85/70/50 for low/medium/high
+  if (combinedScore >= 85) return 'low';
+  if (combinedScore >= 70) return 'medium';
+  if (combinedScore >= 50) return 'high';
   return 'critical';
 }
 
