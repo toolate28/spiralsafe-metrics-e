@@ -217,8 +217,8 @@ export function SpectralAnalyzer() {
               </h3>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-bold font-mono">{localMetrics.avgCoherence}%</span>
-                <Badge variant={localMetrics.avgCoherence > 60 ? 'default' : 'secondary'}>
-                  {localMetrics.avgCoherence > 60 ? '> 60% threshold' : 'Below threshold'}
+                <Badge variant={localMetrics.avgCoherence > 85 ? 'default' : 'secondary'}>
+                  {localMetrics.avgCoherence > 85 ? '> 85% threshold' : 'Below threshold'}
                 </Badge>
               </div>
             </div>
