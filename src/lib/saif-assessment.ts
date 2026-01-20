@@ -68,7 +68,7 @@ export function calculateCQWScore(metrics: SAIFMetrics): number {
  * Measures the self-maintaining characteristics of the system
  */
 export function calculateEmergenceLevel(metrics: SAIFMetrics): number {
-  // Emergence = ability to self-maintain > 60% threshold
+  // Emergence = ability to self-maintain > 85% threshold (CHESS-spec Mission requirement)
   const unificationRatio = metrics.totalDomains > 0
     ? metrics.unifiedDomains / metrics.totalDomains
     : 0;
@@ -151,7 +151,7 @@ export function generateRecommendations(
   }
   
   // Emergence recommendations
-  if (emergenceLevel < 60) {
+  if (emergenceLevel < 85) {
     recommendations.push('Unify domains under consistent infrastructure');
     recommendations.push('Implement automated health monitoring');
   }
@@ -228,10 +228,10 @@ export function performSAIFAssessment(
 }
 
 /**
- * Check if emergence level meets threshold (>60% per requirements)
+ * Check if emergence level meets threshold (>85% per CHESS-spec Mission requirements)
  */
 export function meetsEmergenceThreshold(assessment: SAIFAssessment): boolean {
-  return assessment.emergenceLevel > 60;
+  return assessment.emergenceLevel > 85;
 }
 
 /**

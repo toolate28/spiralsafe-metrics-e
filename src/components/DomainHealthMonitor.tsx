@@ -114,7 +114,7 @@ export function DomainHealthMonitor() {
                 <CardTitle className="text-2xl">Domain Unification Monitor</CardTitle>
                 <CardDescription className="mt-2">
                   VortexForge Autonomy - Unified domain/subdomain health monitoring with SAIF risk assessment.
-                  Maintains corpus with emergent capability threshold greater than 60%.
+                  CHESS-spec Mission: Maintains corpus with emergent capability threshold greater than 85%.
                 </CardDescription>
               </div>
             </div>
@@ -194,10 +194,10 @@ export function DomainHealthMonitor() {
                   <div className="text-2xl font-bold">{saifAssessment.emergenceLevel}%</div>
                   <Progress 
                     value={saifAssessment.emergenceLevel} 
-                    className={`mt-2 h-2 ${saifAssessment.emergenceLevel > 60 ? '' : 'bg-amber-200'}`}
+                    className={`mt-2 h-2 ${saifAssessment.emergenceLevel > 85 ? '' : 'bg-amber-200'}`}
                   />
-                  {saifAssessment.emergenceLevel <= 60 && (
-                    <p className="text-xs text-amber-600 mt-1">Below 60% threshold</p>
+                  {saifAssessment.emergenceLevel <= 85 && (
+                    <p className="text-xs text-amber-600 mt-1">Below 85% threshold</p>
                   )}
                 </div>
 
